@@ -13,6 +13,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
 } from "../actions/login/action_types";
+import utils from "../../utils";
 
 function* register(action) {
   try {
@@ -31,11 +32,14 @@ function* login(action) {
   try {
     const { data } = yield call(
       (params) => rf.getRequest("LoginRequest").login(params),
-      action.params.data
+      action.params
     );
-
-    console.log("-----");
-
+    if (data && !data.hasErr) {
+      utils.showNotification("Success", "Login successfully", "success");
+      localStorage.setItem("token", data.data);
+      localStorage.setItem("isAuth", true);
+      
+    }
     yield put(actions.loginSucceed(data));
   } catch (err) {
     console.log(err);

@@ -1,11 +1,51 @@
+import HomePage from "./pages/HomePage/HomePage";
+import { useSelector } from "react-redux";
 import "./App.css";
-import "./App.scss";
+import "antd/dist/reset.css";
 import LoginPage from "./components/LoginPage/LoginPage";
-import Layout1 from "./components/Sidebar/Layout";
+import RoomManagementPage from "./pages/RoomManagementPage/RoomManagementPage";
+import Navbar from "./components/Navbar/Navbar";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Link,
+  Outlet,
+  createRoutesFromElements,
+} from "react-router-dom";
+import { ProtectedRoute } from "./ProtectedRoute";
+import WrapContainer from "./components/Layout/Layout";
+
+const AppLayout = () => (
+  <ProtectedRoute>
+    <WrapContainer>
+      <Outlet />
+    </WrapContainer>
+  </ProtectedRoute>
+);
+
+const router = createBrowserRouter([
+  {
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />,
+      },
+      {
+        path: "/room-management",
+        element: <RoomManagementPage />,
+      },
+    ],
+  },
+  {
+    element: <LoginPage />,
+    path: "/login",
+  },
+]);
 
 function App() {
-  return <LoginPage />;
-  // return <Layout1 />;
+  return <RouterProvider router={router} />;
 }
 
 export default App;

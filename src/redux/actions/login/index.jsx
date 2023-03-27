@@ -29,13 +29,11 @@ export default {
 
   login: (params) => ({
     type: LOGIN,
-    params, 
+    params,
   }),
   loginSucceed: (data) => ({
     type: LOGIN_SUCCEED,
-    param: {
-      data,
-    },
+    data,
   }),
   loginFail: (err) => ({
     type: LOGIN_FAIL,

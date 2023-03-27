@@ -1,4 +1,4 @@
-import { LOGIN_SUCCEED } from "../actions/login/action_types";
+import { LOGIN_FAIL, LOGIN_SUCCEED } from "../actions/login/action_types";
 
 export default (state = { token: {}, isAuth: false }, action) => {
   switch (action.type) {
@@ -6,7 +6,9 @@ export default (state = { token: {}, isAuth: false }, action) => {
       return {
         ...state,
         isAuth: true,
+        token: action.data,
       };
+      break;
     default:
       return {
         ...state,

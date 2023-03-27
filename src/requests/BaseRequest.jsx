@@ -1,8 +1,8 @@
-import { BASE_URL } from "../../consts";
+import { BASE_URL } from "../consts";
 import React from "react";
 import { get } from "lodash";
 import axios from "../axios";
-
+import utils from "../utils";
 export default class BaseRequest {
   version = "v1";
 
@@ -15,9 +15,9 @@ export default class BaseRequest {
       const response = await axios.get(`${BASE_URL}/${this.version}/${url}`, {
         params,
       });
-      return this._responseHandler(response);
+      return response;
     } catch (error) {
-      this._errorHandler(error);
+      this.errorHandler(error);
     }
   }
 
@@ -27,9 +27,9 @@ export default class BaseRequest {
         `${BASE_URL}/${this.version}/${url}`,
         data
       );
-      return this._responseHandler(response);
+      return response;
     } catch (error) {
-      this._errorHandler(error);
+      this.errorHandler(error);
     }
   }
 
@@ -39,9 +39,9 @@ export default class BaseRequest {
         `${BASE_URL}/${this.version}/${url}`,
         data
       );
-      return this._responseHandler(response);
+      return response;
     } catch (error) {
-      this._errorHandler(error);
+      this.errorHandler(error);
     }
   }
 
@@ -51,67 +51,26 @@ export default class BaseRequest {
         `${BASE_URL}/${this.version}/${url}`,
         params
       );
-      return this._responseHandler(response);
+      return response;
     } catch (error) {
-      this._errorHandler(error);
+      return this.errorHandler(error);
     }
   }
 
-  async _responseHandler(response) {
+  responseHanlder(response) {
     const { data } = response;
-    let errorCode = window._.get(data, "error.code", 200);
-
-    // if (errorCode >= 400) {
-    //   let message = data.error.message;
-    //   let errorsNode = undefined;
-
-    //   if (typeof data.error.message === "string") {
-    //     errorsNode = (
-    //       <div style={{ fontWeight: "bold", color: "red" }}>
-    //         {utils.upperCaseFirst(get(str, message) || message)}
-    //       </div>
-    //     );
-    //   } else {
-    //     errorsNode = window._.map(data.error.message, (message, field) => (
-    //       <div style={{ fontWeight: "bold", color: "red" }} id={field}>
-    //         {utils.upperCaseFirst(
-    //           get(obj, message) ? get(obj, message) : `${field} ${message}`
-    //         )}
-    //       </div>
-    //     ));
-    //   }
-
-    //   utils.showNotification(
-    //     <span style={{ color: "red", fontWeight: "bold" }}>Lỗi</span>,
-    //     errorsNode,
-    //     consts.TYPE_ERROR
-    //   );
-
-    //   if (errorCode === 405) {
-    //     window.h.push("/login");
-    //     window.$dispatch({
-    //       type: CLEAR_USER_DATA,
-    //     });
-    //   }
-    //   throw "Request failed";
-    // } else if (errorCode >= 300) {
-    //   window.h.push("/");
-
-    //   throw "UnAuthorization";
-    // }
-
     return data;
   }
 
-  _errorHandler(err) {
-    if (err.response && err.response.status === 401) {
-      // Unauthorized (session timeout)
-      window.location.href = "/";
+  errorHandler(error) {
+    if (error.response) {
+      console.log(error.response.data); // => the response payload
+      utils.showNotification("Error", error.response.data.errors, "error");
     }
-    throw err;
+    return error;
   }
 
-  getFile(url) {
-    window.location.href = `${BASE_URL}/${API_VERSION}/${url}`;
-  }
+  // getFile(url) {
+  //   window.location.href = `${BASE_URL}/${API_VERSION}/${url}`;
+  // }
 }
