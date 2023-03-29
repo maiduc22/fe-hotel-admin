@@ -3,6 +3,7 @@ import axios from "axios";
 
 import actions from "../actions/login";
 import rf from "../../requests/RequestFactory";
+import jwtDecode from "jwt-decode";
 
 import {
   REGISTER,
@@ -14,6 +15,7 @@ import {
   LOGOUT,
 } from "../actions/login/action_types";
 import utils from "../../utils";
+import { useNavigate } from "react-router-dom";
 
 function* register(action) {
   try {
@@ -36,9 +38,11 @@ function* login(action) {
     );
     if (data && !data.hasErr) {
       utils.showNotification("Success", "Login successfully", "success");
+      const decodedToken = jwtDecode(data.data);
       localStorage.setItem("token", data.data);
       localStorage.setItem("isAuth", true);
-      
+      localStorage.setItem("decodedToken", JSON.stringify(decodedToken));
+      window.location.pathname = "/";
     }
     yield put(actions.loginSucceed(data));
   } catch (err) {

@@ -33,8 +33,14 @@ const parseBookingStatus = (isConfirmed) => {
   }
 };
 
+const isAdmin = () => {
+  const role = JSON.parse(localStorage.getItem("decodedToken")).role[0];
+  return role === "ADMIN";
+};
+
 export default {
   showNotification,
   parseRoomStatus,
   parseBookingStatus,
+  isAdmin,
 };

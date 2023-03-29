@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, Modal } from "antd";
+import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -65,30 +65,6 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
     setAddRoomModalOpen(false);
   };
 
-  // const normFile = (e) => {
-  //   console.log("Upload event:", e);
-  //   if (Array.isArray(e)) {
-  //     return e;
-  //   }
-  //   console.log(e?.fileList[0]);
-  //   setFileImage(e?.fileList[0]);
-  // };
-
-  // const uploadImage = () => {};
-
-  // const uploadButton = (
-  //   <div>
-  //     <PlusOutlined />
-  //     <div
-  //       style={{
-  //         marginTop: 8,
-  //       }}
-  //     >
-  //       Upload
-  //     </div>
-  //   </div>
-  // );
-
   return (
     <Modal
       title="Add New Room"
@@ -116,12 +92,17 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
         <Form.Item
           label="Type"
           name="type"
-          rules={[{ required: true, message: "Please input the room type!" }]}
+          rules={[{ required: true, message: "Please select the room type!" }]}
         >
-          <Input
+          <Select
             value={_roomType}
-            onChange={(e) => setRoomType(e.target.value)}
-          />
+            onChange={(value) => setRoomType(value)}
+            placeholder="Select a room type"
+          >
+            <Select.Option value="SINGLE">SINGLE</Select.Option>
+            <Select.Option value="DOUBLE">DOUBLE</Select.Option>
+            <Select.Option value="VIP">VIP</Select.Option>
+          </Select>
         </Form.Item>
         <Form.Item
           label="Description"
@@ -145,16 +126,7 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
             onChange={(number) => setRoomPrice(number)}
           />
         </Form.Item>
-        <Form.Item
-          name="image"
-          label="Image"
-          // valuePropName="fileList"
-          // getValueFromEvent={normFile}
-          // rules={[{ required: true, message: "Please upload room image" }]}
-        >
-          {/* <Upload listType="picture-card">
-            {_fileImage ? null : uploadButton}
-          </Upload> */}
+        <Form.Item name="image" label="Image">
           <input
             type={"file"}
             onChange={(e) => setFileImage(e.target.files[0])}

@@ -12,10 +12,12 @@ import {
   Link,
   Outlet,
   createRoutesFromElements,
+  Navigate,
 } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import WrapContainer from "./components/Layout/Layout";
 import BookingManagementPage from "./pages/BookingManagementPage/BookingManagementPage";
+import { ProfitManagementPage } from "./pages/ProfitManagementPage/ProfitManagementPage";
 
 const AppLayout = () => (
   <ProtectedRoute>
@@ -31,7 +33,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />,
+        element: <Navigate to="/room-management" />,
       },
       {
         path: "/room-management",
@@ -40,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/booking-management",
         element: <BookingManagementPage />,
+      },
+      {
+        path: "/profit-management",
+        element: <ProfitManagementPage />,
       },
     ],
   },

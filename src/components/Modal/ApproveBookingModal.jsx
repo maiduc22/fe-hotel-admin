@@ -21,7 +21,6 @@ const ApproveBookingModal = ({
   const [form] = Form.useForm();
   const [saleoff, setSaleoff] = useState("");
   const dispatch = useDispatch();
-  console.log(bookingId);
 
   const handleOk = () => {
     dispatch(
@@ -30,7 +29,6 @@ const ApproveBookingModal = ({
         saleoff: saleoff,
       })
     );
-    dispatch(actions.getBooking());
     form.resetFields();
     setIsApproveBookingModalOpen(false);
   };

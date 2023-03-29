@@ -1,18 +1,39 @@
-import { Table, Tag } from "antd";
-import React, { useEffect } from "react";
+import { Popconfirm, Table, Tag, Input, Tooltip } from "antd";
+import React, { useEffect, useState } from "react";
+import { GiCancel, GiConfirmed } from "react-icons/gi";
+import { MdRoomService } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import ApproveBookingModal from "../../components/Modal/ApproveBookingModal";
+import ServiceModal from "../../components/Modal/ServiceModal";
 import { CONFIRMED_STATUS, UNCONFIRMED_STATUS } from "../../consts";
 import actions from "../../redux/actions/bookings";
 import utils from "../../utils";
-import { Popconfirm } from "antd";
-import { GiConfirmed, GiCancel } from "react-icons/gi";
-import axios from "../../axios";
-import { useState } from "react";
-import ApproveBookingModal from "../../components/Modal/ApproveBookingModal";
 
 export default function BookingManagementPage() {
   const [isApproveBookingModalOpen, setIsApproveBookingModalOpen] =
     useState(false);
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  const bookingData = useSelector(
+    (state) => state.booking_reducer
+  ).bookings.filter((booking) =>
+    booking.client.fullName.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
+  const handleCancelBooking = (bookingId) => {
+    dispatch(actions.cancelBooking(bookingId));
+  };
+
+  const dispatch = useDispatch();
+
+  const fetchBooking = () => {
+    dispatch(actions.getBooking());
+  };
+
+  useEffect(() => {
+    fetchBooking();
+  }, []);
 
   const columns = [
     {
@@ -31,7 +52,7 @@ export default function BookingManagementPage() {
       title: "Room Name",
       dataIndex: "rooms",
       key: "roomName",
-      render: (room) => room.map((r) => r.name).join(" - "),
+      render: (room) => room.map((r, index) => r.name).join(" - "),
       align: "center",
     },
     {
@@ -61,8 +82,8 @@ export default function BookingManagementPage() {
     },
     {
       title: "Action",
-      dataIndex: "id",
-      render: (id) => (
+      dataIndex: ["id", "rooms"],
+      render: (id, rooms) => (
         <div className="flex items-center justify-center gap-2">
           <Popconfirm
             title="Cancel booking"
@@ -71,14 +92,27 @@ export default function BookingManagementPage() {
             cancelText="No"
             onConfirm={() => handleCancelBooking(id)}
           >
-            <GiCancel />
+            <Tooltip title="Cancel Booking">
+              <GiCancel />
+            </Tooltip>
           </Popconfirm>
 
-          <GiConfirmed onClick={() => setIsApproveBookingModalOpen(true)} />
+          <Tooltip title="Confirm Booking">
+            <GiConfirmed onClick={() => setIsApproveBookingModalOpen(true)} />
+          </Tooltip>
           <ApproveBookingModal
             isApproveBookingModalOpen={isApproveBookingModalOpen}
             setIsApproveBookingModalOpen={setIsApproveBookingModalOpen}
             bookingId={id}
+          />
+
+          <Tooltip title="Room Service">
+            <MdRoomService onClick={() => setIsServiceModalOpen(true)} />
+          </Tooltip>
+          <ServiceModal
+            isServiceModalOpen={isServiceModalOpen}
+            setIsServiceModalOpen={setIsServiceModalOpen}
+            rooms={rooms.rooms}
           />
         </div>
       ),
@@ -86,26 +120,16 @@ export default function BookingManagementPage() {
     },
   ];
 
-  const handleCancelBooking = (bookingId) => {
-    dispatch(actions.cancelBooking(bookingId));
-  };
-
-  const dispatch = useDispatch();
-
-  const fetchBooking = () => {
-    dispatch(actions.getBooking());
-  };
-
-  useEffect(() => {
-    fetchBooking();
-  }, []);
-
-  const bookingData = useSelector((state) => state.booking_reducer).bookings;
-  console.log(bookingData);
-
   return (
     <div className="w-full">
-      <div className="w-full mb-10"></div>
+      <div className="w-full mb-10 flex justify-start">
+        <Input
+          placeholder="Search by client name"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          className="w-1/5 border-gray-300 border-solid border-2 p-2 rounded-md"
+        />
+      </div>
       <div>
         <Table columns={columns} dataSource={bookingData}></Table>
       </div>
