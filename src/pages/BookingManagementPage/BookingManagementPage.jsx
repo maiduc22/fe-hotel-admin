@@ -31,7 +31,7 @@ export default function BookingManagementPage() {
       title: "Room Name",
       dataIndex: "rooms",
       key: "roomName",
-      render: (room) => room.map((r) => r.name).join(", "),
+      render: (room) => room.map((r) => r.name).join(" - "),
       align: "center",
     },
     {

@@ -24,8 +24,13 @@ const ApproveBookingModal = ({
   console.log(bookingId);
 
   const handleOk = () => {
-    dispatch(actions.approveBooking(bookingId));
-    console.log(bookingId, saleoff);
+    dispatch(
+      actions.approveBooking({
+        bookingId: bookingId,
+        saleoff: saleoff,
+      })
+    );
+    dispatch(actions.getBooking());
     form.resetFields();
     setIsApproveBookingModalOpen(false);
   };

@@ -27,7 +27,7 @@ export default {
 
   approveBooking: (data) => ({
     type: BOOKING_APPROVE,
-    param: {
+    params: {
       data,
     },
   }),
