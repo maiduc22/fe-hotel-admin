@@ -8,11 +8,10 @@ const { Content, Footer } = Layout;
 export default class WrapContainer extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
   render() {
     return (
-      <Layout className="h-screen">
+      <Layout className="">
         <SliderBar />
         <Layout className="site-layout" style={{ marginLeft: 200 }}>
           <NavHeader />

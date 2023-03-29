@@ -1,4 +1,11 @@
-import { GET_ROOM, GET_ROOM_FAIL, GET_ROOM_SUCCEED } from "./action_types";
+import {
+  ADD_ROOM,
+  ADD_ROOM_FAIL,
+  ADD_ROOM_SUCCEED,
+  GET_ROOM,
+  GET_ROOM_FAIL,
+  GET_ROOM_SUCCEED,
+} from "./action_types";
 
 export default {
   getRoom: (data) => ({
@@ -17,20 +24,16 @@ export default {
     type: GET_ROOM_FAIL,
     err,
   }),
-  addRoom: (data) => ({
-    type: GET_ROOM,
-    param: {
-      data,
-    },
+  addRoom: (params) => ({
+    type: ADD_ROOM,
+    params,
   }),
   addRoomSucceed: (data) => ({
-    type: GET_ROOM_SUCCEED,
-    param: {
-      data,
-    },
+    type: ADD_ROOM_SUCCEED,
+    data,
   }),
   addRoomFail: (err) => ({
-    type: GET_ROOM_FAIL,
+    type: ADD_ROOM_FAIL,
     err,
   }),
 };

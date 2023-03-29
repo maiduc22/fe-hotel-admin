@@ -65,12 +65,8 @@ export default class BaseRequest {
   errorHandler(error) {
     if (error.response) {
       console.log(error.response.data); // => the response payload
-      utils.showNotification("Error", error.response.data.errors, "error");
+      // utils.showNotification("Error", error.response.data.errors, "error");
     }
     return error;
   }
-
-  // getFile(url) {
-  //   window.location.href = `${BASE_URL}/${API_VERSION}/${url}`;
-  // }
 }

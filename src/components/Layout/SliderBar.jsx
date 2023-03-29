@@ -31,6 +31,10 @@ export default class SliderBar extends React.Component {
             {" "}
             <Link to={"/room-management"}>Rooms management</Link>
           </Menu.Item>
+          <Menu.Item key="3">
+            {" "}
+            <Link to={"/booking-management"}>Bookings management</Link>
+          </Menu.Item>
         </Menu>
       </Sider>
     );

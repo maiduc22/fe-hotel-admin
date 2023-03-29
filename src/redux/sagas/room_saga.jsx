@@ -1,10 +1,9 @@
-import { put, takeLatest, call, all, fork } from "redux-saga/effects";
+import { all, call, fork, put, takeLatest } from "redux-saga/effects";
 
-import actions from "../actions/rooms";
 import rf from "../../requests/RequestFactory";
-import { times } from "lodash";
-import { ADD_ROOM, GET_ROOM } from "../actions/rooms/action_types";
-import { LOGIN } from "../actions/login/action_types";
+import utils from "../../utils";
+import actions from "../actions/rooms";
+import { ADD_ROOM } from "../actions/rooms/action_types";
 
 function* getRoom(action) {}
 
@@ -14,17 +13,17 @@ function* addRoom(action) {
       (params) => rf.getRequest("RoomRequest").addRoom(params),
       action.params
     );
+    utils.showNotification("Success", "Add new room successfully", "success");
   } catch (err) {
     console.log(err);
     yield put(actions.addRoomFail(err));
   }
 }
 
-function* watchAllRooms() {
-  yield takeLatest(GET_ROOM, getRoom);
+function* watchRooms() {
   yield takeLatest(ADD_ROOM, addRoom);
 }
 
 export default function* rootSaga() {
-  yield all([fork(watchAllRooms)]);
+  yield all([fork(watchRooms)]);
 }

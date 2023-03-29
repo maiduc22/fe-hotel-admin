@@ -1,5 +1,5 @@
 import BaseRequest from "./BaseRequest";
-import axios from "axios";
+
 const schema = "auth";
 
 export default class LoginRequest extends BaseRequest {

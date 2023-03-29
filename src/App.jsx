@@ -4,7 +4,7 @@ import "./App.css";
 import "antd/dist/reset.css";
 import LoginPage from "./components/LoginPage/LoginPage";
 import RoomManagementPage from "./pages/RoomManagementPage/RoomManagementPage";
-import Navbar from "./components/Navbar/Navbar";
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import { ProtectedRoute } from "./ProtectedRoute";
 import WrapContainer from "./components/Layout/Layout";
+import BookingManagementPage from "./pages/BookingManagementPage/BookingManagementPage";
 
 const AppLayout = () => (
   <ProtectedRoute>
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/room-management",
         element: <RoomManagementPage />,
+      },
+      {
+        path: "/booking-management",
+        element: <BookingManagementPage />,
       },
     ],
   },

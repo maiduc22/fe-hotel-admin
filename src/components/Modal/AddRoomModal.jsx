@@ -1,11 +1,9 @@
-import { Modal, Form, Input, Button, Upload } from "antd";
-import { InboxOutlined, UploadOutlined, PlusOutlined } from "@ant-design/icons";
-import { useForm } from "antd/es/form/Form";
+import { Button, Form, Input, InputNumber, Modal } from "antd";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { storage } from "../../firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 } from "uuid";
-import utils from "../../utils";
+import actions from "../../redux/actions/rooms";
 
 const formItemLayout = {
   labelCol: {
@@ -21,22 +19,20 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
 
   const [_roomName, setRoomName] = useState("");
   const [_roomType, setRoomType] = useState("");
-  const [_roomPrice, setRoomPrice] = useState("");
+  const [_roomPrice, setRoomPrice] = useState();
   const [_roomDescription, setRoomDescription] = useState("");
   const [_fileImage, setFileImage] = useState(null);
   const [_imageUrl, setImageUrl] = useState("");
 
-  const handleOk = (value) => {
-    const data = {
-      name: _roomName,
-      type: _roomType,
-      price: _roomPrice,
-      description: _roomDescription,
-      image: _imageUrl,
-    };
+  const dispatch = useDispatch();
 
+  const addRoom = (data) => {
+    console.log(data);
+    dispatch(actions.addRoom(data));
+  };
+
+  const handleOk = () => {
     if (_fileImage == null) return;
-    console.log(_fileImage);
     const imageRef = ref(storage, `images/${_fileImage.name + _fileImage.uid}`);
     uploadBytes(imageRef, _fileImage)
       .then((snapshot) => {
@@ -50,11 +46,14 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
         };
         xhr.open("GET", url);
         xhr.send();
-        console.log(url);
-        setImageUrl(url);
-      })
-      .then(() => {
-        console.log(data);
+        const data = {
+          name: _roomName,
+          type: _roomType,
+          price: _roomPrice,
+          description: _roomDescription,
+          image: url,
+        };
+        addRoom(data);
       });
 
     form.resetFields();
@@ -66,29 +65,29 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
     setAddRoomModalOpen(false);
   };
 
-  const normFile = (e) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    console.log(e?.fileList[0]);
-    setFileImage(e?.fileList[0]);
-  };
+  // const normFile = (e) => {
+  //   console.log("Upload event:", e);
+  //   if (Array.isArray(e)) {
+  //     return e;
+  //   }
+  //   console.log(e?.fileList[0]);
+  //   setFileImage(e?.fileList[0]);
+  // };
 
-  const uploadImage = () => {};
+  // const uploadImage = () => {};
 
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
+  // const uploadButton = (
+  //   <div>
+  //     <PlusOutlined />
+  //     <div
+  //       style={{
+  //         marginTop: 8,
+  //       }}
+  //     >
+  //       Upload
+  //     </div>
+  //   </div>
+  // );
 
   return (
     <Modal
@@ -105,7 +104,7 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
         onFinish={handleOk}
       >
         <Form.Item
-          label="Room name"
+          label="Name"
           name="name"
           rules={[{ required: true, message: "Please input the room name!" }]}
         >
@@ -115,13 +114,35 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
           />
         </Form.Item>
         <Form.Item
-          label="Room type"
+          label="Type"
           name="type"
           rules={[{ required: true, message: "Please input the room type!" }]}
         >
           <Input
             value={_roomType}
             onChange={(e) => setRoomType(e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Description"
+          name="description"
+          rules={[
+            { required: true, message: "Please input the room description!" },
+          ]}
+        >
+          <Input
+            value={_roomType}
+            onChange={(e) => setRoomDescription(e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Price"
+          name="price"
+          rules={[{ required: true, message: "Please input the room price!" }]}
+        >
+          <InputNumber
+            value={_roomType}
+            onChange={(number) => setRoomPrice(number)}
           />
         </Form.Item>
         <Form.Item

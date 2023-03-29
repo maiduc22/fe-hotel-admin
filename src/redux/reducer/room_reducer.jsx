@@ -10,7 +10,7 @@ export default (state = { rooms: [] }, action) => {
         ...state,
         rooms: action.data,
       };
-      break;
+
     case ADD_ROOM_SUCCEED: {
       return {
         ...state,
