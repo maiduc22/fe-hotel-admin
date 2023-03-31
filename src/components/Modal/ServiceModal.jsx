@@ -25,8 +25,6 @@ export default function ServiceModal({
     }
   }, [isServiceModalOpen]);
 
-  console.log(rooms);
-  console.log(record);
   const [form] = Form.useForm();
 
   const handleCancelModal = () => {

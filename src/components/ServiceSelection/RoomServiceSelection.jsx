@@ -34,7 +34,7 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
     setSelectedServices(value);
     setServiceQuantities(
       value.reduce((acc, serviceId) => {
-        return { ...acc, [serviceId]: { quantity: 0, selloff: 0 } };
+        return { ...acc, [serviceId]: { quantity: 1, selloff: 0 } };
       }, {})
     );
   };
@@ -118,8 +118,8 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
               <Col span={8}>
                 <Form.Item name={"Selloff"} label="Selloff">
                   <InputNumber
-                    min={1}
-                    defaultValue={1}
+                    min={0}
+                    defaultValue={0}
                     onChange={(value) => handleSelloffChange(serviceId, value)}
                   />
                 </Form.Item>
