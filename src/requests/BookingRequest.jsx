@@ -8,12 +8,10 @@ export default class BookingRequest extends BaseRequest {
     return this.get(url, param);
   }
   approveBooking(param) {
-    console.log(param.data);
     const url = `${schema}/${param.data.bookingId}/approve?saleoff=${param.data.saleoff}`;
     return this.get(url);
   }
   cancelBooking(param) {
-    console.log(param.data);
     const url = `${schema}/${param.data}/cancel`;
     return this.get(url);
   }

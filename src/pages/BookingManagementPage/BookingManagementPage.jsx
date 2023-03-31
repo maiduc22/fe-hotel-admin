@@ -8,12 +8,14 @@ import ServiceModal from "../../components/Modal/ServiceModal";
 import { CONFIRMED_STATUS, UNCONFIRMED_STATUS } from "../../consts";
 import actions from "../../redux/actions/bookings";
 import utils from "../../utils";
+import { BiCheckShield } from "react-icons/bi";
 
 export default function BookingManagementPage() {
   const [isApproveBookingModalOpen, setIsApproveBookingModalOpen] =
     useState(false);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [_record, setRecord] = useState(null);
 
   const bookingData = useSelector(
     (state) => state.booking_reducer
@@ -23,6 +25,12 @@ export default function BookingManagementPage() {
 
   const handleCancelBooking = (bookingId) => {
     dispatch(actions.cancelBooking(bookingId));
+    window.location.reload();
+  };
+
+  const handleCheckIn = (bookingId) => {
+    dispatch(actions.checkinBooking(bookingId));
+    window.location.reload();
   };
 
   const dispatch = useDispatch();
@@ -34,6 +42,19 @@ export default function BookingManagementPage() {
   useEffect(() => {
     fetchBooking();
   }, []);
+
+  const renderStatusColor = (status) => {
+    switch (status) {
+      case "PENDING":
+        return "red";
+      case "CANCEL":
+        return "black";
+      case "ACCEPT":
+        return "green";
+      case "PROGRESS":
+        return "blue";
+    }
+  };
 
   const columns = [
     {
@@ -71,51 +92,77 @@ export default function BookingManagementPage() {
     },
     {
       title: "Status",
-      dataIndex: ["client", "isConfirmed"],
+      dataIndex: "status",
       key: "Status",
-      render: (isConfirmed) => (
-        <Tag color={isConfirmed ? CONFIRMED_STATUS : UNCONFIRMED_STATUS}>
-          {utils.parseBookingStatus(isConfirmed)}
-        </Tag>
-      ),
+      render: (status) => <Tag color={renderStatusColor(status)}>{status}</Tag>,
       align: "center",
     },
     {
       title: "Action",
-      dataIndex: ["id", "rooms"],
-      render: (id, rooms) => (
-        <div className="flex items-center justify-center gap-2">
-          <Popconfirm
-            title="Cancel booking"
-            description="Are you sure to cancel this booking?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => handleCancelBooking(id)}
-          >
-            <Tooltip title="Cancel Booking">
-              <GiCancel />
-            </Tooltip>
-          </Popconfirm>
-
-          <Tooltip title="Confirm Booking">
-            <GiConfirmed onClick={() => setIsApproveBookingModalOpen(true)} />
-          </Tooltip>
-          <ApproveBookingModal
-            isApproveBookingModalOpen={isApproveBookingModalOpen}
-            setIsApproveBookingModalOpen={setIsApproveBookingModalOpen}
-            bookingId={id}
-          />
-
-          <Tooltip title="Room Service">
-            <MdRoomService onClick={() => setIsServiceModalOpen(true)} />
-          </Tooltip>
-          <ServiceModal
-            isServiceModalOpen={isServiceModalOpen}
-            setIsServiceModalOpen={setIsServiceModalOpen}
-            rooms={rooms.rooms}
-          />
-        </div>
-      ),
+      key: "action",
+      render: (record) => {
+        let actions = null;
+        switch (record.status) {
+          case "PENDING":
+            actions = (
+              <div className="flex items-center justify-center gap-2">
+                <Popconfirm
+                  title="Cancel booking"
+                  description="Are you sure to cancel this booking?"
+                  okText="Yes"
+                  cancelText="No"
+                  onConfirm={() => handleCancelBooking(record.id)}
+                >
+                  <Tooltip title="Cancel Booking">
+                    <GiCancel />
+                  </Tooltip>
+                </Popconfirm>
+                <Tooltip title="Confirm Booking">
+                  <GiConfirmed
+                    onClick={() => setIsApproveBookingModalOpen(true)}
+                  />
+                </Tooltip>
+                <ApproveBookingModal
+                  isApproveBookingModalOpen={isApproveBookingModalOpen}
+                  setIsApproveBookingModalOpen={setIsApproveBookingModalOpen}
+                  bookingId={record.id}
+                />
+              </div>
+            );
+            break;
+          case "ACCEPT":
+            actions = (
+              <div className="flex items-center justify-center gap-2">
+                <Tooltip title="Check In">
+                  <BiCheckShield onClick={() => handleCheckIn(record.id)} />
+                </Tooltip>
+              </div>
+            );
+            break;
+          case "PROGRESS":
+            actions = (
+              <div className="flex items-center justify-center gap-2">
+                <Tooltip title="Room Service">
+                  <MdRoomService
+                    onClick={() => {
+                      setIsServiceModalOpen(true);
+                      setRecord(record);
+                    }}
+                  />
+                </Tooltip>
+                <ServiceModal
+                  isServiceModalOpen={isServiceModalOpen}
+                  setIsServiceModalOpen={setIsServiceModalOpen}
+                  record={_record}
+                />
+              </div>
+            );
+            break;
+          default:
+            actions = null;
+        }
+        return <div className="text-center">{actions}</div>;
+      },
       align: "center",
     },
   ];

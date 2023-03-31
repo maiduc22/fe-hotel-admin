@@ -1,5 +1,5 @@
 import { Form, Modal, Button, Tabs, Checkbox } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RoomServiceSelection from "../ServiceSelection/RoomServiceSelection";
 
 const { TabPane } = Tabs;
@@ -16,9 +16,17 @@ const formItemLayout = {
 export default function ServiceModal({
   isServiceModalOpen,
   setIsServiceModalOpen,
-  rooms,
+  record,
 }) {
+  const [rooms, setRooms] = useState([]);
+  useEffect(() => {
+    if (isServiceModalOpen) {
+      setRooms(record.rooms);
+    }
+  }, [isServiceModalOpen]);
+
   console.log(rooms);
+  console.log(record);
   const [form] = Form.useForm();
 
   const handleCancelModal = () => {
@@ -35,13 +43,7 @@ export default function ServiceModal({
     <Tabs>
       {rooms.map((room) => (
         <TabPane tab={room.name} key={room.name}>
-          {/* <p>Check-in: {room.checkin}</p>
-          <p>Checkout: {room.checkout}</p>
-          <p>Image: {room.image}</p>
-          <p>Note: {room.note}</p>
-          <p>Status: {room.status}</p>
-          <p>Type: {room.type}</p> */}
-          <RoomServiceSelection roomId={room.id} />
+          <RoomServiceSelection roomId={room.id} bookingId={record.id} />
         </TabPane>
       ))}
     </Tabs>
@@ -53,25 +55,8 @@ export default function ServiceModal({
       open={isServiceModalOpen}
       onCancel={() => handleCancelModal()}
       onOk={() => handleFinishForm()}
+      footer={""}
     >
-      {/* <Form
-        style={{ maxWidth: 600 }}
-        {...formItemLayout}
-        form={form}
-        autoComplete={"off"}
-        onFinish={handleFinishForm}
-      >
-        <Form.Item
-          wrapperCol={{
-            offset: 20,
-            span: 4,
-          }}
-        >
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form> */}
       <RoomTabs />
     </Modal>
   );

@@ -34,6 +34,10 @@ export default function SliderBar() {
           {" "}
           <Link to={"/booking-management"}>Bookings management</Link>
         </Menu.Item>
+        <Menu.Item key="/service-management">
+          {" "}
+          <Link to={"/service-management"}>Service management</Link>
+        </Menu.Item>
       </Menu>
     </Sider>
   );

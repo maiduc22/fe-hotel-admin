@@ -1,4 +1,11 @@
-import { all, call, fork, put, takeLatest } from "redux-saga/effects";
+import {
+  all,
+  call,
+  fork,
+  put,
+  takeEvery,
+  takeLatest,
+} from "redux-saga/effects";
 
 import rf from "../../requests/RequestFactory";
 import utils from "../../utils";
@@ -6,6 +13,7 @@ import actions from "../actions/bookings";
 import {
   BOOKING_APPROVE,
   BOOKING_CANCEL,
+  BOOKING_CHECKIN,
   GET_BOOKING,
 } from "../actions/bookings/action_type";
 
@@ -56,10 +64,23 @@ function* approveBooking(action) {
   }
 }
 
+function* checkinBooking(action) {
+  try {
+    yield call(
+      (params) => rf.getRequest("BookingRequest").checkinBooking(params),
+      action.params
+    );
+    utils.showNotification("Success", "CheckIn successfully", "success");
+  } catch (err) {
+    console.log(err);
+    yield put(action.cancelBookingFail(err));
+  }
+}
 function* watchBooking() {
   yield takeLatest(GET_BOOKING, getBooking);
   yield takeLatest(BOOKING_CANCEL, cancelBooking);
   yield takeLatest(BOOKING_APPROVE, approveBooking);
+  yield takeLatest(BOOKING_CHECKIN, checkinBooking);
 }
 
 export default function* rootSaga() {

@@ -31,6 +31,7 @@ const ApproveBookingModal = ({
     );
     form.resetFields();
     setIsApproveBookingModalOpen(false);
+    window.location.reload();
   };
 
   const handleCancel = () => {
