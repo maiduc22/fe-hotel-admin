@@ -2,11 +2,12 @@ import * as React from "react";
 import { Menu, Layout } from "antd";
 const { Sider } = Layout;
 import { Link, useLocation } from "react-router-dom";
+import utils from "../../utils";
 
 export default function SliderBar() {
   const location = useLocation();
   const path = location.pathname;
-
+  const isAdmin = utils.isAdmin();
   return (
     <Sider
       style={{
@@ -38,6 +39,14 @@ export default function SliderBar() {
           {" "}
           <Link to={"/service-management"}>Service management</Link>
         </Menu.Item>
+        {isAdmin ? (
+          <Menu.Item key="/create-account">
+            {" "}
+            <Link to={"/create-account"}>Create account </Link>
+          </Menu.Item>
+        ) : (
+          ""
+        )}
       </Menu>
     </Sider>
   );

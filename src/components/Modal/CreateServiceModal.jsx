@@ -26,11 +26,10 @@ export default function CreateServiceModal({ isOpen, setIsOpen }) {
   };
   const handleCreateService = () => {
     const data = { name: _name, price: _price, description: _description };
-    console.log();
     dispatch(actions.createService(data));
     setIsOpen(false);
     form.resetFields();
-    window.location.reload(); 
+    window.location.reload();
   };
 
   const handleCancelModal = () => {

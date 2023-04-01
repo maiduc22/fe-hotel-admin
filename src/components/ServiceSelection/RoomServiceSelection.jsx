@@ -112,7 +112,7 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
               </Col>
               <Col span={8}>
                 <Form.Item
-                  name="quantity"
+                  name={`quantity${serviceId}`}
                   label="Quantity"
                   wrapperCol={{
                     offset: 0,
@@ -127,7 +127,7 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
                 </Form.Item>
               </Col>
               <Col span={8}>
-                <Form.Item name={"Selloff"} label="Selloff">
+                <Form.Item name={`sell${serviceId}`} label="Selloff">
                   <InputNumber
                     min={0}
                     defaultValue={0}

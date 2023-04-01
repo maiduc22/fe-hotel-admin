@@ -12,15 +12,13 @@ import {
 export default {
   register: (data) => ({
     type: REGISTER,
-    param: {
+    params: {
       data,
     },
   }),
   registerSucceed: (data) => ({
     type: REGISTER_SUCCEED,
-    param: {
-      data,
-    },
+    data,
   }),
   registerFail: (err) => ({
     type: REGISTER_FAIL,

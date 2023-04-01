@@ -30,6 +30,13 @@ function* createService(action) {
       (params) => rf.getRequest("ServiceRequest").createService(params),
       action.params
     );
+    if (!data.hasErrors) {
+      utils.showNotification(
+        "Success",
+        "Create service successfully!",
+        "success"
+      );
+    }
   } catch (err) {
     console.log(err);
     yield put(actions.createServiceFail(err));

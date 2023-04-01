@@ -8,6 +8,7 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 export default function RoomManagementPage() {
   const [isAddRoomModalOpen, setIsAddRoomModalOpen] = useState(false);
 
+  console.log(utils.isAdmin());
   const handleDeleteRoom = () => {
     console.log("Deleted room");
   };

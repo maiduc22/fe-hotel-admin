@@ -19,6 +19,7 @@ import WrapContainer from "./components/Layout/Layout";
 import BookingManagementPage from "./pages/BookingManagementPage/BookingManagementPage";
 import { ProfitManagementPage } from "./pages/ProfitManagementPage/ProfitManagementPage";
 import ServiceManagementPage from "./pages/ServiceManagementPage/ServiceManagementPage";
+import { CreateEmployeeAccountPage } from "./pages/CreateEmployeeAcountPage/CreateEmployeeAccountPage";
 
 const AppLayout = () => (
   <ProtectedRoute>
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/service-management",
         element: <ServiceManagementPage />,
+      },
+      {
+        path: "/create-account",
+        element: <CreateEmployeeAccountPage />,
       },
     ],
   },

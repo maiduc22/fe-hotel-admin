@@ -16,7 +16,7 @@ export default function ServiceManagementPage() {
 
   const handleInactiveService = (serviceId) => {
     dispatch(actions.inactiveService(serviceId));
-    window.location.reload();
+    // window.location.reload();
   };
 
   const columns = [
@@ -73,7 +73,7 @@ export default function ServiceManagementPage() {
 
   useEffect(() => {
     fetchService();
-  }, []);
+  }, [dispatch]);
 
   const service = useSelector((state) => state.service_reducer).service;
 
