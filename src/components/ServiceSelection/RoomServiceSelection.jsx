@@ -64,6 +64,17 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
     };
     console.log(data);
     console.log(bookingId);
+    dispatch(
+      actions.orderService({
+        bookingId: bookingId,
+        body: [
+          {
+            roomId: roomId,
+            services: serviceData,
+          },
+        ],
+      })
+    );
   };
 
   return (

@@ -36,11 +36,6 @@ function* cancelBooking(action) {
       (params) => rf.getRequest("BookingRequest").cancelBooking(params),
       action.params
     );
-    utils.showNotification(
-      "Success",
-      "Cancel the booking successfully",
-      "success"
-    );
   } catch (err) {
     console.log(err);
     yield put(actions.cancelBookingFail(err));
@@ -52,11 +47,6 @@ function* approveBooking(action) {
     yield call(
       (params) => rf.getRequest("BookingRequest").approveBooking(params),
       action.params
-    );
-    utils.showNotification(
-      "Success",
-      "Approve the booking successfully",
-      "success"
     );
   } catch (err) {
     console.log(err);
@@ -70,7 +60,6 @@ function* checkinBooking(action) {
       (params) => rf.getRequest("BookingRequest").checkinBooking(params),
       action.params
     );
-    utils.showNotification("Success", "CheckIn successfully", "success");
   } catch (err) {
     console.log(err);
     yield put(action.cancelBookingFail(err));

@@ -25,7 +25,7 @@ export default function BookingManagementPage() {
 
   const handleCancelBooking = (bookingId) => {
     dispatch(actions.cancelBooking(bookingId));
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleCheckIn = (bookingId) => {

@@ -27,7 +27,8 @@ export default class ServiceRequest extends BaseRequest {
   }
 
   orderService(param) {
-    const url = `${schema}/${param.data.id}/order`;
-    return this.post(url, param.data.data);
+    console.log(param);
+    const url = `${schema}/${param.data.bookingId}/order`;
+    return this.post(url, param.data.body);
   }
 }
