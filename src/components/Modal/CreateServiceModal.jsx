@@ -30,7 +30,7 @@ export default function CreateServiceModal({ isOpen, setIsOpen }) {
     dispatch(actions.createService(data));
     setIsOpen(false);
     form.resetFields();
-    window.location.reload();
+    window.location.reload(); 
   };
 
   const handleCancelModal = () => {

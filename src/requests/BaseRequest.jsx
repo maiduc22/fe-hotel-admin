@@ -59,13 +59,14 @@ export default class BaseRequest {
 
   responseHanlder(response) {
     const { data } = response;
+    console.log(data);
     return data;
   }
 
   errorHandler(error) {
     if (error.response) {
       console.log(error.response.data); // => the response payload
-      // utils.showNotification("Error", error.response.data.errors, "error");
+      utils.showNotification("Error", error.response.data.errors, "error");
     }
     return error;
   }
