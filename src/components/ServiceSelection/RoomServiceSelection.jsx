@@ -69,7 +69,7 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
         bookingId: bookingId,
         body: [
           {
-            roomId: roomId,
+            roomID: roomId,
             services: serviceData,
           },
         ],
