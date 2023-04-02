@@ -58,18 +58,13 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
       id: serviceId,
       ...serviceQuantities[serviceId],
     }));
-    const data = {
-      roomId: roomId,
-      services: serviceData,
-    };
-    console.log(data);
-    console.log(bookingId);
+
     dispatch(
       actions.orderService({
         bookingId: bookingId,
         body: [
           {
-            roomId: roomId,
+            roomID: roomId,
             services: serviceData,
           },
         ],
