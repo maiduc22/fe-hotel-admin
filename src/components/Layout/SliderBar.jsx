@@ -40,10 +40,16 @@ export default function SliderBar() {
           <Link to={"/service-management"}>Service management</Link>
         </Menu.Item>
         {isAdmin ? (
-          <Menu.Item key="/create-account">
-            {" "}
-            <Link to={"/create-account"}>Create account </Link>
-          </Menu.Item>
+          <>
+            <Menu.Item key="/create-account">
+              {" "}
+              <Link to={"/create-account"}>Create account </Link>
+            </Menu.Item>
+            <Menu.Item key="/profit">
+              {" "}
+              <Link to={"/profit"}>Profit </Link>
+            </Menu.Item>
+          </>
         ) : (
           ""
         )}

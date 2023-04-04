@@ -1,14 +1,14 @@
-import { Popconfirm, Table, Tag, Input, Tooltip } from "antd";
+import { Input, Popconfirm, Table, Tag, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
+import { AiFillInfoCircle } from "react-icons/ai";
+import { BiCheckShield } from "react-icons/bi";
 import { GiCancel, GiConfirmed } from "react-icons/gi";
 import { MdRoomService } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ApproveBookingModal from "../../components/Modal/ApproveBookingModal";
 import ServiceModal from "../../components/Modal/ServiceModal";
-import { CONFIRMED_STATUS, UNCONFIRMED_STATUS } from "../../consts";
 import actions from "../../redux/actions/bookings";
-import utils from "../../utils";
-import { BiCheckShield } from "react-icons/bi";
 
 export default function BookingManagementPage() {
   const [isApproveBookingModalOpen, setIsApproveBookingModalOpen] =
@@ -16,6 +16,8 @@ export default function BookingManagementPage() {
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [_record, setRecord] = useState(null);
+
+  const navigate = useNavigate();
 
   const bookingData = useSelector(
     (state) => state.booking_reducer
@@ -31,6 +33,12 @@ export default function BookingManagementPage() {
   const handleCheckIn = (bookingId) => {
     dispatch(actions.checkinBooking(bookingId));
     window.location.reload();
+  };
+
+  const handleViewBillDetails = (bookingId) => {
+    // dispatch(actions.checkoutBooking(bookingId));
+    console.log(bookingId);
+    navigate(`/bill-details/${bookingId}`);
   };
 
   const dispatch = useDispatch();
@@ -76,20 +84,20 @@ export default function BookingManagementPage() {
       render: (room) => room.map((r, index) => r.name).join(" - "),
       align: "center",
     },
-    {
-      title: "Check-In Time",
-      dataIndex: "rooms",
-      key: "checkIn",
-      render: (room) => room[0].checkout.split("T")[0],
-      align: "center",
-    },
-    {
-      title: "Check-Out Time",
-      dataIndex: "rooms",
-      key: "checkOut",
-      render: (room) => room[0].checkin.split("T")[0],
-      align: "center",
-    },
+    // {
+    //   title: "Check-In Time",
+    //   dataIndex: "rooms",
+    //   key: "checkIn",
+    //   render: (room) => room[0].checkout.split("T")[0],
+    //   align: "center",
+    // },
+    // {
+    //   title: "Check-Out Time",
+    //   dataIndex: "rooms",
+    //   key: "checkOut",
+    //   render: (room) => room[0].checkin.split("T")[0],
+    //   align: "center",
+    // },
     {
       title: "Status",
       dataIndex: "status",
@@ -148,6 +156,12 @@ export default function BookingManagementPage() {
                       setIsServiceModalOpen(true);
                       setRecord(record);
                     }}
+                  />
+                </Tooltip>
+
+                <Tooltip title="View bill details">
+                  <AiFillInfoCircle
+                    onClick={() => handleViewBillDetails(record.id)}
                   />
                 </Tooltip>
                 <ServiceModal

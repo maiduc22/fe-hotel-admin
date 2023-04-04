@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Table, Tooltip } from "antd";
+import { Button, Modal, Table, Tag, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/actions/services";
 import { useEffect } from "react";
@@ -16,7 +16,17 @@ export default function ServiceManagementPage() {
 
   const handleInactiveService = (serviceId) => {
     dispatch(actions.inactiveService(serviceId));
+    fetchService();
     // window.location.reload();
+  };
+
+  const renderActiveStyle = (status) => {
+    switch (status) {
+      case "ACTIVE":
+        return "green";
+      case "INACTIVE":
+        return "red";
+    }
   };
 
   const columns = [
@@ -39,10 +49,22 @@ export default function ServiceManagementPage() {
       align: "center",
     },
     {
+      title: "Status",
+      align: "center",
+      key: "status",
+      dataIndex: "status",
+      render: (status, index) => (
+        <Tag key={index} color={renderActiveStyle(status)}>
+          {status}
+        </Tag>
+      ),
+    },
+    {
       title: "Actions",
       align: "center",
+      key: "actions",
       render: (record) => (
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-4" key={record.id}>
           <Tooltip title="Update Service">
             <AiFillEdit
               onClick={() => {

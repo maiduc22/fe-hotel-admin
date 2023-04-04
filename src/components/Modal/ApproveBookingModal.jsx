@@ -19,7 +19,7 @@ const ApproveBookingModal = ({
   bookingId,
 }) => {
   const [form] = Form.useForm();
-  const [saleoff, setSaleoff] = useState("");
+  const [saleoff, setSaleoff] = useState(0);
   const dispatch = useDispatch();
 
   const handleOk = () => {
@@ -31,7 +31,7 @@ const ApproveBookingModal = ({
     );
     form.resetFields();
     setIsApproveBookingModalOpen(false);
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleCancel = () => {
@@ -56,11 +56,7 @@ const ApproveBookingModal = ({
         autoComplete="off"
         onFinish={handleOk}
       >
-        <Form.Item
-          label="Saleoff"
-          name="saleoff"
-          rules={[{ required: true, message: "Please input the sale off!" }]}
-        >
+        <Form.Item label="Saleoff" name="saleoff" labelAlign="left">
           <InputNumber
             formatter={formatter}
             parser={parser}
@@ -69,6 +65,7 @@ const ApproveBookingModal = ({
             addonAfter={"%"}
             onChange={(value) => setSaleoff(value)}
             value={saleoff}
+            style={{ width: "100%" }}
           />
         </Form.Item>
 

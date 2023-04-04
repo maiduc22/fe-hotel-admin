@@ -6,6 +6,8 @@ import {
   BOOKING_CANCEL_FAIL,
   BOOKING_CHECKIN,
   BOOKING_CHECKIN_FAIL,
+  BOOKING_CHECKOUT,
+  BOOKING_CHECKOUT_FAIL,
   GET_BOOKING,
   GET_BOOKING_FAIL,
   GET_BOOKING_SUCCEED,
@@ -62,6 +64,17 @@ export default {
   }),
   checkinBookingFail: (err) => ({
     type: BOOKING_CHECKIN_FAIL,
+    err,
+  }),
+
+  checkoutBooking: (data) => ({
+    type: BOOKING_CHECKOUT,
+    params: {
+      data,
+    },
+  }),
+  checkoutBookingFail: (err) => ({
+    type: BOOKING_CHECKOUT_FAIL,
     err,
   }),
 };

@@ -20,6 +20,7 @@ import BookingManagementPage from "./pages/BookingManagementPage/BookingManageme
 import { ProfitManagementPage } from "./pages/ProfitManagementPage/ProfitManagementPage";
 import ServiceManagementPage from "./pages/ServiceManagementPage/ServiceManagementPage";
 import { CreateEmployeeAccountPage } from "./pages/CreateEmployeeAcountPage/CreateEmployeeAccountPage";
+import { BillDetails } from "./components/BillDetails/BillDetais";
 
 const AppLayout = () => (
   <ProtectedRoute>
@@ -46,8 +47,12 @@ const router = createBrowserRouter([
         element: <BookingManagementPage />,
       },
       {
-        path: "/profit-management",
-        element: <ProfitManagementPage />,
+        path: "/bills",
+        element: <BookingManagementPage />,
+      },
+      {
+        path: "/bill-details/:bookingId",
+        element: <BillDetails />,
       },
       {
         path: "/service-management",
@@ -56,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/create-account",
         element: <CreateEmployeeAccountPage />,
+      },
+      {
+        path: "/profit",
+        element: <ProfitManagementPage />,
       },
     ],
   },
