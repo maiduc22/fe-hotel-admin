@@ -30,6 +30,7 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
   const addRoom = (data) => {
     console.log(data);
     dispatch(actions.addRoom(data));
+    window.location.reload();
   };
 
   const handleOk = () => {

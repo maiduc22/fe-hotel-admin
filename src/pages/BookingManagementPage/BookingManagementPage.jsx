@@ -124,11 +124,17 @@ export default function BookingManagementPage() {
                     <GiCancel />
                   </Tooltip>
                 </Popconfirm>
-                <Tooltip title="Confirm Booking">
-                  <GiConfirmed
-                    onClick={() => setIsApproveBookingModalOpen(true)}
-                  />
-                </Tooltip>
+                <Popconfirm
+                  title="Confirm booking"
+                  description="Are you sure to confirm this booking?"
+                  okText="Yes"
+                  cancelText="No"
+                  onConfirm={() => setIsApproveBookingModalOpen(true)}
+                >
+                  <Tooltip title="Confirm Booking">
+                    <GiConfirmed />
+                  </Tooltip>
+                </Popconfirm>
                 <ApproveBookingModal
                   isApproveBookingModalOpen={isApproveBookingModalOpen}
                   setIsApproveBookingModalOpen={setIsApproveBookingModalOpen}
@@ -140,9 +146,17 @@ export default function BookingManagementPage() {
           case "ACCEPT":
             actions = (
               <div className="flex items-center justify-center gap-2">
-                <Tooltip title="Check In">
-                  <BiCheckShield onClick={() => handleCheckIn(record.id)} />
-                </Tooltip>
+                <Popconfirm
+                  title="CheckIn"
+                  okText="Yes"
+                  cancelText="No"
+                  description="Are you sure to checkin this booking?"
+                  onConfirm={() => handleCheckIn(record.id)}
+                >
+                  <Tooltip title="Check In">
+                    <BiCheckShield />
+                  </Tooltip>
+                </Popconfirm>
               </div>
             );
             break;
@@ -158,11 +172,17 @@ export default function BookingManagementPage() {
                   />
                 </Tooltip>
 
-                <Tooltip title="Check out and View bills">
-                  <AiFillInfoCircle
-                    onClick={() => handleViewBillDetails(record.id)}
-                  />
-                </Tooltip>
+                <Popconfirm
+                  onConfirm={() => handleViewBillDetails(record.id)}
+                  title="CheckOut"
+                  okText="Yes"
+                  cancelText="No"
+                  description="Are you sure to checkout this booking?"
+                >
+                  <Tooltip title="Check out and View bills">
+                    <AiFillInfoCircle />
+                  </Tooltip>
+                </Popconfirm>
                 <ServiceModal
                   isServiceModalOpen={isServiceModalOpen}
                   setIsServiceModalOpen={setIsServiceModalOpen}

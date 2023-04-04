@@ -1,4 +1,4 @@
-import { Card, Col, Descriptions, Row, Tabs, Typography } from "antd";
+import { Button, Card, Col, Descriptions, Row, Tabs, Typography } from "antd";
 import { useParams } from "react-router-dom";
 const { Title, Text } = Typography;
 import axios from "../../axios";
@@ -72,7 +72,7 @@ export const BillDetails = () => {
             <Tabs>
               {billData?.rooms.map((room, index) => (
                 <TabPane tab={room.name} key={index}>
-                  <Descriptions title="Room Info" column={2}>
+                  <Descriptions title={`Room ${room.name}`} column={2}>
                     <Descriptions.Item label="Price">
                       {room.price}
                     </Descriptions.Item>
@@ -104,6 +104,8 @@ export const BillDetails = () => {
           </div>
         </Col>
       </Row>
+
+      {/* <Button></Button> */}
     </Card>
   );
 };

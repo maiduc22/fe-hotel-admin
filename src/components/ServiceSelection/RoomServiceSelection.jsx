@@ -70,6 +70,7 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
         ],
       })
     );
+    form.resetFields();
   };
 
   return (

@@ -40,6 +40,7 @@ const UpdateRoomModal = ({
       })
     );
     utils.showNotification("Success", "Update room successfullt", "success");
+    window.location.reload();
   };
 
   const handleOk = (value) => {
