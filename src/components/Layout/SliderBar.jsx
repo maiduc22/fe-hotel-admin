@@ -47,7 +47,7 @@ export default function SliderBar() {
             </Menu.Item>
             <Menu.Item key="/profit">
               {" "}
-              <Link to={"/profit"}>Profit </Link>
+              <Link to={"/profit"}>Statistic </Link>
             </Menu.Item>
           </>
         ) : (

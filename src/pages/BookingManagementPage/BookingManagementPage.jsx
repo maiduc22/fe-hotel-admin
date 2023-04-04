@@ -37,7 +37,6 @@ export default function BookingManagementPage() {
 
   const handleViewBillDetails = (bookingId) => {
     // dispatch(actions.checkoutBooking(bookingId));
-    console.log(bookingId);
     navigate(`/bill-details/${bookingId}`);
   };
 
@@ -159,7 +158,7 @@ export default function BookingManagementPage() {
                   />
                 </Tooltip>
 
-                <Tooltip title="View bill details">
+                <Tooltip title="Check out and View bills">
                   <AiFillInfoCircle
                     onClick={() => handleViewBillDetails(record.id)}
                   />
@@ -169,6 +168,17 @@ export default function BookingManagementPage() {
                   setIsServiceModalOpen={setIsServiceModalOpen}
                   record={_record}
                 />
+              </div>
+            );
+            break;
+          case "DONE":
+            actions = (
+              <div className="flex items-center justify-center gap-2">
+                <Tooltip title="View bill details">
+                  <AiFillInfoCircle
+                    onClick={() => handleViewBillDetails(record.id)}
+                  />
+                </Tooltip>
               </div>
             );
             break;

@@ -76,7 +76,7 @@ function* orderService(action) {
     if (!data.hasErrors) {
       utils.showNotification(
         "Success",
-        "Create service successfully!",
+        "Order service successfully!",
         "success"
       );
     }
