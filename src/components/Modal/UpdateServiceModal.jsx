@@ -53,7 +53,7 @@ export default function UpdateServiceModal({ isOpen, setIsOpen, service }) {
   return (
     <Modal
       title="Update Service"
-      visible={isOpen}
+      open={isOpen}
       onOk={handleUpdateService}
       onCancel={handleCancelModal}
     >

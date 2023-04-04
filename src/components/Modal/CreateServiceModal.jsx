@@ -40,7 +40,7 @@ export default function CreateServiceModal({ isOpen, setIsOpen }) {
   return (
     <Modal
       title="Add Service"
-      visible={isOpen}
+      open={isOpen}
       onOk={handleCreateService}
       onCancel={handleCancelModal}
     >

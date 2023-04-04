@@ -95,7 +95,7 @@ export default function ServiceManagementPage() {
 
   useEffect(() => {
     fetchService();
-  }, [dispatch]);
+  }, []);
 
   const service = useSelector((state) => state.service_reducer).service;
 
