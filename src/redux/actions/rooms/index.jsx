@@ -7,6 +7,8 @@ import {
   GET_ROOM,
   GET_ROOM_FAIL,
   GET_ROOM_SUCCEED,
+  UNBLOCK_ROOM,
+  UNBLOCK_ROOM_FAIL,
   UPDATE_ROOM,
   UPDATE_ROOM_FAIL,
   UPDATE_ROOM_SUCCEED,
@@ -28,9 +30,10 @@ export default {
     err,
   }),
 
-  addRoom: (params) => ({
+  addRoom: (params, callback) => ({
     type: ADD_ROOM,
     params,
+    callback,
   }),
   addRoomSucceed: (data) => ({
     type: ADD_ROOM_SUCCEED,
@@ -41,9 +44,10 @@ export default {
     err,
   }),
 
-  udpateRoom: (params) => ({
+  udpateRoom: (params, callback) => ({
     type: UPDATE_ROOM,
     params,
+    callback,
   }),
   udpateRoomSucceed: (data) => ({
     type: UPDATE_ROOM_SUCCEED,
@@ -54,12 +58,23 @@ export default {
     err,
   }),
 
-  blockRoom: (params) => ({
+  blockRoom: (params, callback) => ({
     type: BLOCK_ROOM,
     params,
+    callback,
   }),
   blockRoomFail: (err) => ({
     type: BLOCK_ROOM_FAIL,
+    err,
+  }),
+
+  unblockRoom: (params, callback) => ({
+    type: UNBLOCK_ROOM,
+    params,
+    callback,
+  }),
+  unblockRoomFail: (err) => ({
+    type: UNBLOCK_ROOM_FAIL,
     err,
   }),
 };

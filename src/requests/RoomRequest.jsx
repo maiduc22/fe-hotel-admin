@@ -25,4 +25,10 @@ export default class RoomRequest extends BaseRequest {
     const url = `${schema}/${params}/block`;
     return this.post(url);
   }
+
+  unblockRoom(params) {
+    console.log(params);
+    const url = `${schema}/${params}/unlock`;
+    return this.post(url);
+  }
 }
