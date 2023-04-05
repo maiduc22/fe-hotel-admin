@@ -14,6 +14,7 @@ import {
   BOOKING_APPROVE,
   BOOKING_CANCEL,
   BOOKING_CHECKIN,
+  BOOKING_CHECKOUT,
   GET_BOOKING,
 } from "../actions/bookings/action_type";
 
@@ -65,11 +66,23 @@ function* checkinBooking(action) {
     yield put(action.cancelBookingFail(err));
   }
 }
+
+function* checkoutBooking(action) {
+  try {
+    const { data } = yield call(
+      (params) => rf.getRequest("BookingRequest").checkoutBooking(params),
+      action.params
+    );
+    console.log(data);
+  } catch (err) {}
+}
+
 function* watchBooking() {
   yield takeLatest(GET_BOOKING, getBooking);
   yield takeLatest(BOOKING_CANCEL, cancelBooking);
   yield takeLatest(BOOKING_APPROVE, approveBooking);
   yield takeLatest(BOOKING_CHECKIN, checkinBooking);
+  yield takeLatest(BOOKING_CHECKOUT, checkoutBooking);
 }
 
 export default function* rootSaga() {

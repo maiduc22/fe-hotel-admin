@@ -1,14 +1,14 @@
-import { Popconfirm, Table, Tag, Input, Tooltip } from "antd";
+import { Input, Popconfirm, Table, Tag, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
+import { AiFillInfoCircle } from "react-icons/ai";
+import { BiCheckShield } from "react-icons/bi";
 import { GiCancel, GiConfirmed } from "react-icons/gi";
 import { MdRoomService } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import ApproveBookingModal from "../../components/Modal/ApproveBookingModal";
 import ServiceModal from "../../components/Modal/ServiceModal";
-import { CONFIRMED_STATUS, UNCONFIRMED_STATUS } from "../../consts";
 import actions from "../../redux/actions/bookings";
-import utils from "../../utils";
-import { BiCheckShield } from "react-icons/bi";
 
 export default function BookingManagementPage() {
   const [isApproveBookingModalOpen, setIsApproveBookingModalOpen] =
@@ -16,6 +16,8 @@ export default function BookingManagementPage() {
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [_record, setRecord] = useState(null);
+
+  const navigate = useNavigate();
 
   const bookingData = useSelector(
     (state) => state.booking_reducer
@@ -31,6 +33,11 @@ export default function BookingManagementPage() {
   const handleCheckIn = (bookingId) => {
     dispatch(actions.checkinBooking(bookingId));
     window.location.reload();
+  };
+
+  const handleViewBillDetails = (bookingId) => {
+    // dispatch(actions.checkoutBooking(bookingId));
+    navigate(`/bill-details/${bookingId}`);
   };
 
   const dispatch = useDispatch();
@@ -76,25 +83,29 @@ export default function BookingManagementPage() {
       render: (room) => room.map((r, index) => r.name).join(" - "),
       align: "center",
     },
-    {
-      title: "Check-In Time",
-      dataIndex: "rooms",
-      key: "checkIn",
-      render: (room) => room[0].checkout.split("T")[0],
-      align: "center",
-    },
-    {
-      title: "Check-Out Time",
-      dataIndex: "rooms",
-      key: "checkOut",
-      render: (room) => room[0].checkin.split("T")[0],
-      align: "center",
-    },
+    // {
+    //   title: "Check-In Time",
+    //   dataIndex: "rooms",
+    //   key: "checkIn",
+    //   render: (room) => room[0].checkout.split("T")[0],
+    //   align: "center",
+    // },
+    // {
+    //   title: "Check-Out Time",
+    //   dataIndex: "rooms",
+    //   key: "checkOut",
+    //   render: (room) => room[0].checkin.split("T")[0],
+    //   align: "center",
+    // },
     {
       title: "Status",
       dataIndex: "status",
       key: "Status",
-      render: (status) => <Tag color={renderStatusColor(status)}>{status}</Tag>,
+      render: (status, index) => (
+        <Tag color={renderStatusColor(status)} key={index}>
+          {status}
+        </Tag>
+      ),
       align: "center",
     },
     {
@@ -105,7 +116,10 @@ export default function BookingManagementPage() {
         switch (record.status) {
           case "PENDING":
             actions = (
-              <div className="flex items-center justify-center gap-2">
+              <div
+                className="flex items-center justify-center gap-2"
+                key={record.id}
+              >
                 <Popconfirm
                   title="Cancel booking"
                   description="Are you sure to cancel this booking?"
@@ -117,11 +131,17 @@ export default function BookingManagementPage() {
                     <GiCancel />
                   </Tooltip>
                 </Popconfirm>
-                <Tooltip title="Confirm Booking">
-                  <GiConfirmed
-                    onClick={() => setIsApproveBookingModalOpen(true)}
-                  />
-                </Tooltip>
+                <Popconfirm
+                  title="Confirm booking"
+                  description="Are you sure to confirm this booking?"
+                  okText="Yes"
+                  cancelText="No"
+                  onConfirm={() => setIsApproveBookingModalOpen(true)}
+                >
+                  <Tooltip title="Confirm Booking">
+                    <GiConfirmed />
+                  </Tooltip>
+                </Popconfirm>
                 <ApproveBookingModal
                   isApproveBookingModalOpen={isApproveBookingModalOpen}
                   setIsApproveBookingModalOpen={setIsApproveBookingModalOpen}
@@ -132,16 +152,30 @@ export default function BookingManagementPage() {
             break;
           case "ACCEPT":
             actions = (
-              <div className="flex items-center justify-center gap-2">
-                <Tooltip title="Check In">
-                  <BiCheckShield onClick={() => handleCheckIn(record.id)} />
-                </Tooltip>
+              <div
+                className="flex items-center justify-center gap-2"
+                key={record.id}
+              >
+                <Popconfirm
+                  title="CheckIn"
+                  okText="Yes"
+                  cancelText="No"
+                  description="Are you sure to checkin this booking?"
+                  onConfirm={() => handleCheckIn(record.id)}
+                >
+                  <Tooltip title="Check In">
+                    <BiCheckShield />
+                  </Tooltip>
+                </Popconfirm>
               </div>
             );
             break;
           case "PROGRESS":
             actions = (
-              <div className="flex items-center justify-center gap-2">
+              <div
+                className="flex items-center justify-center gap-2"
+                key={record.id}
+              >
                 <Tooltip title="Room Service">
                   <MdRoomService
                     onClick={() => {
@@ -150,6 +184,18 @@ export default function BookingManagementPage() {
                     }}
                   />
                 </Tooltip>
+
+                <Popconfirm
+                  onConfirm={() => handleViewBillDetails(record.id)}
+                  title="CheckOut"
+                  okText="Yes"
+                  cancelText="No"
+                  description="Are you sure to checkout this booking?"
+                >
+                  <Tooltip title="Check out and View bills">
+                    <AiFillInfoCircle />
+                  </Tooltip>
+                </Popconfirm>
                 <ServiceModal
                   isServiceModalOpen={isServiceModalOpen}
                   setIsServiceModalOpen={setIsServiceModalOpen}
@@ -158,10 +204,28 @@ export default function BookingManagementPage() {
               </div>
             );
             break;
+          case "DONE":
+            actions = (
+              <div
+                className="flex items-center justify-center gap-2"
+                key={record.id}
+              >
+                <Tooltip title="View bill details">
+                  <AiFillInfoCircle
+                    onClick={() => handleViewBillDetails(record.id)}
+                  />
+                </Tooltip>
+              </div>
+            );
+            break;
           default:
             actions = null;
         }
-        return <div className="text-center">{actions}</div>;
+        return (
+          <div className="text-center" key={record.id}>
+            {actions}
+          </div>
+        );
       },
       align: "center",
     },
@@ -178,7 +242,7 @@ export default function BookingManagementPage() {
         />
       </div>
       <div>
-        <Table columns={columns} dataSource={bookingData}></Table>
+        <Table columns={columns} dataSource={bookingData} rowKey="id"></Table>
       </div>
     </div>
   );

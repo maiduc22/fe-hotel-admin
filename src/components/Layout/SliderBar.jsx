@@ -8,6 +8,44 @@ export default function SliderBar() {
   const location = useLocation();
   const path = location.pathname;
   const isAdmin = utils.isAdmin();
+
+  const menuItems = isAdmin
+    ? [
+        {
+          key: "/room-management",
+          label: <Link to={"/room-management"}>Rooms management</Link>,
+        },
+        {
+          key: "/booking-management",
+          label: <Link to={"/booking-management"}>Bookings management</Link>,
+        },
+        {
+          key: "/service-management",
+          label: <Link to={"/service-management"}>Service management</Link>,
+        },
+        {
+          key: "/create-account",
+          label: <Link to={"/create-account"}>Create account </Link>,
+        },
+        {
+          key: "/profit",
+          label: <Link to={"/profit"}>Statistic </Link>,
+        },
+      ]
+    : [
+        {
+          key: "/room-management",
+          label: <Link to={"/room-management"}>Rooms management</Link>,
+        },
+        {
+          key: "/booking-management",
+          label: <Link to={"/booking-management"}>Bookings management</Link>,
+        },
+        {
+          key: "/service-management",
+          label: <Link to={"/service-management"}>Service management</Link>,
+        },
+      ];
   return (
     <Sider
       style={{
@@ -26,8 +64,9 @@ export default function SliderBar() {
         mode="inline"
         defaultSelectedKeys={[path !== "/" ? path : "/room-management"]}
         className="mt-2 font-bold"
+        items={menuItems}
       >
-        <Menu.Item key="/room-management">
+        {/* <Menu.Item key="/room-management">
           {" "}
           <Link to={"/room-management"}>Rooms management</Link>
         </Menu.Item>
@@ -40,13 +79,19 @@ export default function SliderBar() {
           <Link to={"/service-management"}>Service management</Link>
         </Menu.Item>
         {isAdmin ? (
-          <Menu.Item key="/create-account">
-            {" "}
-            <Link to={"/create-account"}>Create account </Link>
-          </Menu.Item>
+          <>
+            <Menu.Item key="/create-account">
+              {" "}
+              <Link to={"/create-account"}>Create account </Link>
+            </Menu.Item>
+            <Menu.Item key="/profit">
+              {" "}
+              <Link to={"/profit"}>Statistic </Link>
+            </Menu.Item>
+          </>
         ) : (
           ""
-        )}
+        )} */}
       </Menu>
     </Sider>
   );

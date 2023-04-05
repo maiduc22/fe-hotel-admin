@@ -13,12 +13,14 @@ const showNotification = (
 
 const parseRoomStatus = (value) => {
   switch (value) {
-    case true:
-      return "Booked";
-    case false:
-      return "Available";
-    default:
-      break;
+    case "FREE":
+      return "Free";
+    case "PENDING":
+      return "Pending";
+    case "PROGRESS":
+      return "PROGRESS";
+    case "BLOCK":
+      return "BLOCK";
   }
 };
 

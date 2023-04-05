@@ -34,7 +34,7 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
     setSelectedServices(value);
     setServiceQuantities(
       value.reduce((acc, serviceId) => {
-        return { ...acc, [serviceId]: { quantity: 1, selloff: 0 } };
+        return { ...acc, [serviceId]: { quantity: 1, saleoff: 0 } };
       }, {})
     );
   };
@@ -49,7 +49,7 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
   const handleSelloffChange = (serviceId, value) => {
     setServiceQuantities({
       ...serviceQuantities,
-      [serviceId]: { ...serviceQuantities[serviceId], selloff: value },
+      [serviceId]: { ...serviceQuantities[serviceId], saleoff: value },
     });
   };
 
@@ -58,12 +58,7 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
       id: serviceId,
       ...serviceQuantities[serviceId],
     }));
-    const data = {
-      roomId: roomId,
-      services: serviceData,
-    };
-    console.log(data);
-    console.log(bookingId);
+
     dispatch(
       actions.orderService({
         bookingId: bookingId,
@@ -75,6 +70,7 @@ const RoomServiceSelection = ({ roomId, bookingId }) => {
         ],
       })
     );
+    form.resetFields();
   };
 
   return (

@@ -20,4 +20,9 @@ export default class BookingRequest extends BaseRequest {
     const url = `${schema}/${param.data}/checkin`;
     return this.get(url);
   }
+
+  checkoutBooking(param) {
+    const url = `bills/${param.data}`;
+    return this.get(url);
+  }
 }

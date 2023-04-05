@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal, Table, Tooltip } from "antd";
+import { Button, Modal, Table, Tag, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/actions/services";
 import { useEffect } from "react";
@@ -16,7 +16,19 @@ export default function ServiceManagementPage() {
 
   const handleInactiveService = (serviceId) => {
     dispatch(actions.inactiveService(serviceId));
-    // window.location.reload();
+    fetchService();
+    window.location.reload();
+  };
+
+  const renderActiveStyle = (status) => {
+    switch (status) {
+      case "ACTIVE":
+        return "green";
+      case "INACTIVE":
+        return "red";
+      default:
+        return "";
+    }
   };
 
   const columns = [
@@ -39,27 +51,41 @@ export default function ServiceManagementPage() {
       align: "center",
     },
     {
+      title: "Status",
+      align: "center",
+      key: "status",
+      dataIndex: "status",
+      render: (status, index) => (
+        <Tag key={index} color={renderActiveStyle(status)}>
+          {status}
+        </Tag>
+      ),
+    },
+    {
       title: "Actions",
       align: "center",
+      key: "actions",
       render: (record) => (
-        <div className="flex items-center justify-center gap-4">
-          <Tooltip title="Update Service">
-            <AiFillEdit
-              onClick={() => {
-                setIsUpdateModalOpen(true);
-                setRecord(record);
-              }}
-            />
-          </Tooltip>
-          <Tooltip title="Inactive Service">
-            <BiBlock onClick={() => handleInactiveService(record.id)} />
-          </Tooltip>
+        <div key={record.id}>
+          <div className="flex items-center justify-center gap-4">
+            <Tooltip title="Update Service">
+              <AiFillEdit
+                onClick={() => {
+                  setIsUpdateModalOpen(true);
+                  setRecord(record);
+                }}
+              />
+            </Tooltip>
+            <Tooltip title="Inactive Service">
+              <BiBlock onClick={() => handleInactiveService(record.id)} />
+            </Tooltip>
 
-          <UpdateServiceModal
-            isOpen={_isUpdateModalOpen}
-            setIsOpen={setIsUpdateModalOpen}
-            service={_record}
-          />
+            <UpdateServiceModal
+              isOpen={_isUpdateModalOpen}
+              setIsOpen={setIsUpdateModalOpen}
+              service={_record}
+            />
+          </div>
         </div>
       ),
     },
@@ -73,7 +99,7 @@ export default function ServiceManagementPage() {
 
   useEffect(() => {
     fetchService();
-  }, [dispatch]);
+  }, []);
 
   const service = useSelector((state) => state.service_reducer).service;
 
@@ -89,7 +115,7 @@ export default function ServiceManagementPage() {
         />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={service} />
+        <Table columns={columns} dataSource={service} rowKey="id" />
       </div>
     </div>
   );

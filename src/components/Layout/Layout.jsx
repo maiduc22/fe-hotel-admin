@@ -11,11 +11,17 @@ export default class WrapContainer extends React.Component {
   }
   render() {
     return (
-      <Layout className="">
+      <Layout>
         <SliderBar />
         <Layout className="site-layout" style={{ marginLeft: 200 }}>
           <NavHeader />
-          <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+          <Content
+            style={{
+              margin: "24px 16px 0",
+              overflow: "initial",
+              height: "calc(100vh - 72px)",
+            }}
+          >
             <div
               className="site-layout-background"
               style={{ padding: 24, textAlign: "center" }}

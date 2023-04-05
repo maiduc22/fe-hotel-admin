@@ -21,9 +21,6 @@ export default function CreateServiceModal({ isOpen, setIsOpen }) {
   const [_price, setPrice] = useState();
   const [_description, setDescription] = useState("");
 
-  const createService = (data) => {
-    dispatch(actions.createService(data));
-  };
   const handleCreateService = () => {
     const data = { name: _name, price: _price, description: _description };
     dispatch(actions.createService(data));
@@ -40,11 +37,16 @@ export default function CreateServiceModal({ isOpen, setIsOpen }) {
   return (
     <Modal
       title="Add Service"
-      visible={isOpen}
-      onOk={handleCreateService}
+      open={isOpen}
       onCancel={handleCancelModal}
+      footer=""
     >
-      <Form form={form} style={{ maxWidth: 600 }} {...formItemLayout}>
+      <Form
+        form={form}
+        style={{ maxWidth: 600 }}
+        {...formItemLayout}
+        onFinish={handleCreateService}
+      >
         <Form.Item
           label="Service Name"
           name="name"
@@ -83,6 +85,16 @@ export default function CreateServiceModal({ isOpen, setIsOpen }) {
             value={_description}
             onChange={(e) => setDescription(e.target.value)}
           />
+        </Form.Item>
+        <Form.Item
+          wrapperCol={{
+            offset: 20,
+            span: 4,
+          }}
+        >
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
         </Form.Item>
       </Form>
     </Modal>

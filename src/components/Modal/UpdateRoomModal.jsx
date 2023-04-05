@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { storage } from "../../firebase";
 import actions from "../../redux/actions/rooms";
-import utils from "../../utils/index";
+import utils from "../../utils";
 
 const formItemLayout = {
   labelCol: {
@@ -15,7 +15,11 @@ const formItemLayout = {
   },
 };
 
-const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
+const UpdateRoomModal = ({
+  isUpdateRoomModalOpen,
+  setUpdateRoomModalOpen,
+  room,
+}) => {
   const [form] = Form.useForm();
 
   const [_roomName, setRoomName] = useState("");
@@ -27,56 +31,64 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
 
   const dispatch = useDispatch();
 
-  const addRoom = (data) => {
-    console.log(data);
-    dispatch(actions.addRoom(data));
+  const updateRoom = (data) => {
+    dispatch(
+      actions.udpateRoom({
+        roomId: room.id,
+        body: data,
+      })
+    );
+    utils.showNotification("Success", "Update room successfullt", "success");
     window.location.reload();
   };
 
-  const handleOk = () => {
+  const handleOk = (value) => {
     if (_fileImage == null) {
-      utils.showNotification(
-        "Warn",
-        "You need to upload room image",
-        "warning"
+      console.log("Khong co anh");
+      console.log(room?.image);
+      Object.assign(value, { image: room?.image });
+      updateRoom(value);
+    } else {
+      const imageRef = ref(
+        storage,
+        `images/${_fileImage.name + _fileImage.uid}`
       );
-      return;
+      uploadBytes(imageRef, _fileImage)
+        .then((snapshot) => {
+          return getDownloadURL(snapshot.ref);
+        })
+        .then((url) => {
+          const xhr = new XMLHttpRequest();
+          xhr.responseType = "blob";
+          xhr.onload = (event) => {
+            const blob = xhr.response;
+          };
+          xhr.open("GET", url);
+          xhr.send();
+          value[image] == url;
+          const data = {
+            name: value.name,
+            price: value.price,
+            description: value.description,
+            type: value.type,
+            image: url,
+          };
+          updateRoom(data);
+        });
     }
-    const imageRef = ref(storage, `images/${_fileImage.name + _fileImage.uid}`);
-    uploadBytes(imageRef, _fileImage)
-      .then((snapshot) => {
-        return getDownloadURL(snapshot.ref);
-      })
-      .then((url) => {
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "blob";
-        xhr.onload = (event) => {
-          const blob = xhr.response;
-        };
-        xhr.open("GET", url);
-        xhr.send();
-        const data = {
-          name: _roomName,
-          type: _roomType,
-          price: _roomPrice,
-          description: _roomDescription,
-          image: url,
-        };
-        addRoom(data);
-      });
     form.resetFields();
-    setAddRoomModalOpen(false);
+    setUpdateRoomModalOpen(false);
   };
 
   const handleCancel = () => {
     form.resetFields();
-    setAddRoomModalOpen(false);
+    setUpdateRoomModalOpen(false);
   };
 
   return (
     <Modal
       title="Add New Room"
-      open={isAddRoomModalOpen}
+      open={isUpdateRoomModalOpen}
       onCancel={handleCancel}
       footer={""}
     >
@@ -86,6 +98,13 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
         form={form}
         autoComplete="off"
         onFinish={handleOk}
+        initialValues={{
+          name: room?.name,
+          type: room?.type,
+          price: room?.price,
+          description: room?.description,
+          //   image: room?.image,
+        }}
       >
         <Form.Item
           label="Name"
@@ -134,6 +153,7 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
             onChange={(number) => setRoomPrice(number)}
           />
         </Form.Item>
+
         <Form.Item name="image" label="Image">
           <input
             type={"file"}
@@ -155,4 +175,4 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
   );
 };
 
-export default AddRoomModal;
+export default UpdateRoomModal;

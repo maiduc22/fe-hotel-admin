@@ -2,12 +2,14 @@ import LoginRequest from "./LoginRequest";
 import RoomRequest from "./RoomRequest";
 import BookingRequest from "./BookingRequest";
 import ServiceRequest from "./ServiceRequest";
+import StatisticRequest from "./StatisticRequest";
 
 const requestMap = {
   LoginRequest,
   RoomRequest,
   BookingRequest,
   ServiceRequest,
+  StatisticRequest,
 };
 
 const instances = {};

@@ -69,10 +69,17 @@ function* inactiveService(action) {
 
 function* orderService(action) {
   try {
-    yield call(
+    const { data } = yield call(
       (params) => rf.getRequest("ServiceRequest").orderService(params),
       action.params
     );
+    if (!data.hasErrors) {
+      utils.showNotification(
+        "Success",
+        "Order service successfully!",
+        "success"
+      );
+    }
   } catch (err) {
     console.log(err);
     yield put(actions.orderServiceFail(err));
