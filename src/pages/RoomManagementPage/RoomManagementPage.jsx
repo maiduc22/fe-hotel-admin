@@ -135,7 +135,7 @@ export default function RoomManagementPage() {
 
   return (
     <div className="w-full ">
-      <div className="w-full mb-10 ">
+      <div className="w-full mb-10 flex justify-end">
         <Button onClick={() => setIsAddRoomModalOpen(true)}>
           Add new room
         </Button>
@@ -145,7 +145,7 @@ export default function RoomManagementPage() {
         />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={rooms}></Table>
+        <Table columns={columns} dataSource={rooms} rowKey="id"></Table>
       </div>
     </div>
   );

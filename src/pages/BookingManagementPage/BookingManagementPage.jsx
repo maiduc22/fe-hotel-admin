@@ -101,7 +101,11 @@ export default function BookingManagementPage() {
       title: "Status",
       dataIndex: "status",
       key: "Status",
-      render: (status) => <Tag color={renderStatusColor(status)}>{status}</Tag>,
+      render: (status, index) => (
+        <Tag color={renderStatusColor(status)} key={index}>
+          {status}
+        </Tag>
+      ),
       align: "center",
     },
     {
@@ -112,7 +116,10 @@ export default function BookingManagementPage() {
         switch (record.status) {
           case "PENDING":
             actions = (
-              <div className="flex items-center justify-center gap-2">
+              <div
+                className="flex items-center justify-center gap-2"
+                key={record.id}
+              >
                 <Popconfirm
                   title="Cancel booking"
                   description="Are you sure to cancel this booking?"
@@ -145,7 +152,10 @@ export default function BookingManagementPage() {
             break;
           case "ACCEPT":
             actions = (
-              <div className="flex items-center justify-center gap-2">
+              <div
+                className="flex items-center justify-center gap-2"
+                key={record.id}
+              >
                 <Popconfirm
                   title="CheckIn"
                   okText="Yes"
@@ -162,7 +172,10 @@ export default function BookingManagementPage() {
             break;
           case "PROGRESS":
             actions = (
-              <div className="flex items-center justify-center gap-2">
+              <div
+                className="flex items-center justify-center gap-2"
+                key={record.id}
+              >
                 <Tooltip title="Room Service">
                   <MdRoomService
                     onClick={() => {
@@ -193,7 +206,10 @@ export default function BookingManagementPage() {
             break;
           case "DONE":
             actions = (
-              <div className="flex items-center justify-center gap-2">
+              <div
+                className="flex items-center justify-center gap-2"
+                key={record.id}
+              >
                 <Tooltip title="View bill details">
                   <AiFillInfoCircle
                     onClick={() => handleViewBillDetails(record.id)}
@@ -205,7 +221,11 @@ export default function BookingManagementPage() {
           default:
             actions = null;
         }
-        return <div className="text-center">{actions}</div>;
+        return (
+          <div className="text-center" key={record.id}>
+            {actions}
+          </div>
+        );
       },
       align: "center",
     },
@@ -222,7 +242,7 @@ export default function BookingManagementPage() {
         />
       </div>
       <div>
-        <Table columns={columns} dataSource={bookingData}></Table>
+        <Table columns={columns} dataSource={bookingData} rowKey="id"></Table>
       </div>
     </div>
   );

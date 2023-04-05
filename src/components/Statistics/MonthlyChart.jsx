@@ -18,14 +18,14 @@ export const MonthlyChart = ({ data }) => {
   };
 
   const chartOptions = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
+    type: "bar",
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
         },
-      ],
+      },
     },
   };
 

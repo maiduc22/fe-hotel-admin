@@ -1,6 +1,6 @@
+import { Bar } from "react-chartjs-2";
 import utils from "../../utils";
 import React, { useEffect, useRef } from "react";
-import { Bar } from "react-chartjs-2";
 
 export const RoomChart = ({ data }) => {
   const chartData = {
@@ -17,14 +17,14 @@ export const RoomChart = ({ data }) => {
   };
 
   const chartOptions = {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
+    type: "bar",
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
         },
-      ],
+      },
     },
   };
 

@@ -17,7 +17,7 @@ export default function ServiceManagementPage() {
   const handleInactiveService = (serviceId) => {
     dispatch(actions.inactiveService(serviceId));
     fetchService();
-    // window.location.reload();
+    window.location.reload();
   };
 
   const renderActiveStyle = (status) => {
@@ -26,6 +26,8 @@ export default function ServiceManagementPage() {
         return "green";
       case "INACTIVE":
         return "red";
+      default:
+        return "";
     }
   };
 
@@ -64,24 +66,26 @@ export default function ServiceManagementPage() {
       align: "center",
       key: "actions",
       render: (record) => (
-        <div className="flex items-center justify-center gap-4" key={record.id}>
-          <Tooltip title="Update Service">
-            <AiFillEdit
-              onClick={() => {
-                setIsUpdateModalOpen(true);
-                setRecord(record);
-              }}
-            />
-          </Tooltip>
-          <Tooltip title="Inactive Service">
-            <BiBlock onClick={() => handleInactiveService(record.id)} />
-          </Tooltip>
+        <div key={record.id}>
+          <div className="flex items-center justify-center gap-4">
+            <Tooltip title="Update Service">
+              <AiFillEdit
+                onClick={() => {
+                  setIsUpdateModalOpen(true);
+                  setRecord(record);
+                }}
+              />
+            </Tooltip>
+            <Tooltip title="Inactive Service">
+              <BiBlock onClick={() => handleInactiveService(record.id)} />
+            </Tooltip>
 
-          <UpdateServiceModal
-            isOpen={_isUpdateModalOpen}
-            setIsOpen={setIsUpdateModalOpen}
-            service={_record}
-          />
+            <UpdateServiceModal
+              isOpen={_isUpdateModalOpen}
+              setIsOpen={setIsUpdateModalOpen}
+              service={_record}
+            />
+          </div>
         </div>
       ),
     },
@@ -111,7 +115,7 @@ export default function ServiceManagementPage() {
         />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={service} />
+        <Table columns={columns} dataSource={service} rowKey="id" />
       </div>
     </div>
   );

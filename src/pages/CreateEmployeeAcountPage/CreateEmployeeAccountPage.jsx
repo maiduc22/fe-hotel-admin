@@ -22,18 +22,17 @@ export const CreateEmployeeAccountPage = () => {
 
   const handleSubmit = (value) => {
     dispatch(actions.register(value));
-    utils.showNotification(
-      "Success",
-      "Create new employee account successfullt",
-      "success"
-    );
     form.resetFields();
   };
 
   if (isUserAdmin) {
     return (
       <>
-        <Form {...formItemLayout} onFinish={(value) => handleSubmit(value)}>
+        <Form
+          {...formItemLayout}
+          onFinish={(value) => handleSubmit(value)}
+          form={form}
+        >
           <Form.Item name={"username"} label="Employee Name">
             <Input />
           </Form.Item>

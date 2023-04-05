@@ -1,12 +1,10 @@
-import { Button, Card, Col, Descriptions, Row, Tabs, Typography } from "antd";
-import { useParams } from "react-router-dom";
-const { Title, Text } = Typography;
-import axios from "../../axios";
-import { data } from "autoprefixer";
-import { BASE_URL } from "../../consts";
-import { useState } from "react";
-import { useEffect } from "react";
+import { Card, Col, Descriptions, Row, Tabs, Typography } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "../../axios";
+import { BASE_URL } from "../../consts";
+const { Title, Text } = Typography;
 
 const billData = {
   guestName: "Mai Duc",
@@ -82,7 +80,7 @@ export const BillDetails = () => {
                   </Descriptions>
                   <Descriptions title="Serivices Used" column={2}>
                     {room.services.map((service, index) => (
-                      <>
+                      <React.Fragment key={index}>
                         <Descriptions.Item label="Service Name">
                           {service.name}
                         </Descriptions.Item>
@@ -95,7 +93,7 @@ export const BillDetails = () => {
                         <Descriptions.Item label="Saleoff">
                           {service.saleoff}
                         </Descriptions.Item>
-                      </>
+                      </React.Fragment>
                     ))}
                   </Descriptions>
                 </TabPane>

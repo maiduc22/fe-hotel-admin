@@ -7,6 +7,7 @@ import { MonthlyChart } from "../../components/Statistics/MonthlyChart";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/actions/statistics";
 import { ServiceChart } from "../../components/Statistics/ServiceChart";
+import { Navigate } from "react-router-dom";
 
 const { TabPane } = Tabs;
 

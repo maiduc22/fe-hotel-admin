@@ -32,7 +32,6 @@ const UpdateRoomModal = ({
   const dispatch = useDispatch();
 
   const updateRoom = (data) => {
-    console.log(data);
     dispatch(
       actions.udpateRoom({
         roomId: room.id,
@@ -77,7 +76,6 @@ const UpdateRoomModal = ({
           updateRoom(data);
         });
     }
-
     form.resetFields();
     setUpdateRoomModalOpen(false);
   };
