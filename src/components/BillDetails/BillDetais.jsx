@@ -57,10 +57,10 @@ export const BillDetails = () => {
               {billData?.employee}
             </Descriptions.Item>
             <Descriptions.Item label="Deposit">
-              {billData?.deposit}
+              {Math.ceil(billData?.deposit)}
             </Descriptions.Item>
             <Descriptions.Item label="Need to Pay">
-              {billData?.amount}
+              {Math.ceil(billData?.amount)}
             </Descriptions.Item>
           </Descriptions>
         </Col>
