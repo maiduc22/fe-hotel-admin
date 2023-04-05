@@ -4,6 +4,7 @@ import rf from "../../requests/RequestFactory";
 import utils from "../../utils";
 import actions from "../actions/services";
 import {
+  ACTIVE_SERVICE,
   CREATE_SERVICE,
   GET_SERVICE,
   INACTIVE_SERVICE,
@@ -82,6 +83,22 @@ function* inactiveService(action) {
   }
 }
 
+function* activeService(action) {
+  try {
+    yield call(
+      (params) => rf.getRequest("ServiceRequest").activeService(params),
+      action.params
+    );
+    if (isFunction(action.callback)) {
+      yield action.callback();
+    }
+    utils.showNotification("Success", "Active service successfully", "success");
+  } catch (err) {
+    console.log(err);
+    yield put(actions.activeServiceFail(err));
+  }
+}
+
 function* orderService(action) {
   try {
     const { data } = yield call(
@@ -106,6 +123,7 @@ function* watchService() {
   yield takeLatest(CREATE_SERVICE, createService);
   yield takeLatest(UPDATE_SERVICE, updateService);
   yield takeLatest(INACTIVE_SERVICE, inactiveService);
+  yield takeLatest(ACTIVE_SERVICE, activeService);
   yield takeLatest(ORDER_SERVICE, orderService);
 }
 

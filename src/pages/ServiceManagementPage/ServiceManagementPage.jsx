@@ -1,12 +1,12 @@
 import React from "react";
-import { Button, Modal, Table, Tag, Tooltip } from "antd";
+import { Button, Modal, Popconfirm, Table, Tag, Tooltip } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/actions/services";
 import { useEffect } from "react";
 import { useState } from "react";
 import CreateServiceModal from "../../components/Modal/CreateServiceModal";
 import { BiBlock } from "react-icons/bi";
-import { AiFillEdit } from "react-icons/ai";
+import { AiFillEdit, AiFillUnlock } from "react-icons/ai";
 import UpdateServiceModal from "../../components/Modal/UpdateServiceModal";
 
 export default function ServiceManagementPage() {
@@ -16,6 +16,10 @@ export default function ServiceManagementPage() {
 
   const handleInactiveService = (serviceId) => {
     dispatch(actions.inactiveService(serviceId, () => fetchService()));
+  };
+
+  const handleActiveService = (serviceId) => {
+    dispatch(actions.activeService(serviceId, () => fetchService()));
   };
 
   const renderActiveStyle = (status) => {
@@ -63,7 +67,7 @@ export default function ServiceManagementPage() {
       title: "Actions",
       align: "center",
       key: "actions",
-      render: (record) => (
+      render: (record, status) => (
         <div key={record.id}>
           <div className="flex items-center justify-center gap-4">
             <Tooltip title="Update Service">
@@ -74,9 +78,27 @@ export default function ServiceManagementPage() {
                 }}
               />
             </Tooltip>
-            <Tooltip title="Inactive Service">
-              <BiBlock onClick={() => handleInactiveService(record.id)} />
-            </Tooltip>
+            {status == "INACTIVE" ? (
+              <Popconfirm
+                title="Inactive service"
+                description="Do you want to inactive this service"
+                onConfirm={() => handleInactiveService(record.id)}
+              >
+                <Tooltip title="Inactive Service">
+                  <BiBlock />
+                </Tooltip>
+              </Popconfirm>
+            ) : (
+              <Popconfirm
+                title="Active service"
+                description="Do you want to active this service"
+                onConfirm={() => handleActiveService(record.id)}
+              >
+                <Tooltip title="Active Service">
+                  <AiFillUnlock />
+                </Tooltip>
+              </Popconfirm>
+            )}
 
             <UpdateServiceModal
               isOpen={_isUpdateModalOpen}

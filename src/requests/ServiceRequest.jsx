@@ -25,6 +25,11 @@ export default class ServiceRequest extends BaseRequest {
     const url = `${schema}/${param.data}/in-active`;
     return this.post(url);
   }
+  activeService(param) {
+    console.log(param);
+    const url = `${schema}/${param.data}/active`;
+    return this.post(url);
+  }
 
   orderService(param) {
     console.log(param);

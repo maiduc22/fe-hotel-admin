@@ -1,4 +1,6 @@
 import {
+  ACTIVE_SERVICE,
+  ACTIVE_SERVICE_FAIL,
   CREATE_SERVICE,
   CREATE_SERVICE_FAIL,
   CREATE_SERVICE_SUCCEED,
@@ -94,6 +96,18 @@ export default {
   }),
   inactiveServiceFail: (err) => ({
     type: INACTIVE_SERVICE_FAIL,
+    err,
+  }),
+
+  activeService: (data, callback) => ({
+    type: ACTIVE_SERVICE,
+    params: {
+      data,
+    },
+    callback,
+  }),
+  activeServiceFail: (err) => ({
+    typeof: ACTIVE_SERVICE_FAIL,
     err,
   }),
 };
