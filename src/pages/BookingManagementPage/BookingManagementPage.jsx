@@ -26,13 +26,12 @@ export default function BookingManagementPage() {
   );
 
   const handleCancelBooking = (bookingId) => {
-    dispatch(actions.cancelBooking(bookingId));
-    window.location.reload();
+    dispatch(actions.cancelBooking(bookingId, () => fetchBooking()));
   };
 
   const handleCheckIn = (bookingId) => {
-    dispatch(actions.checkinBooking(bookingId));
-    window.location.reload();
+    dispatch(actions.checkinBooking(bookingId, () => fetchBooking()));
+    // window.location.reload();
   };
 
   const handleViewBillDetails = (bookingId) => {
@@ -146,6 +145,7 @@ export default function BookingManagementPage() {
                   isApproveBookingModalOpen={isApproveBookingModalOpen}
                   setIsApproveBookingModalOpen={setIsApproveBookingModalOpen}
                   bookingId={record.id}
+                  fetchBooking={fetchBooking}
                 />
               </div>
             );

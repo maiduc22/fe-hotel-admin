@@ -29,11 +29,12 @@ export default {
     err,
   }),
 
-  approveBooking: (data) => ({
+  approveBooking: (data, callback) => ({
     type: BOOKING_APPROVE,
     params: {
       data,
     },
+    callback,
   }),
   approveBookingSucceed: (data) => ({
     type: BOOKING_APPROVE_SUCCEED,
@@ -46,32 +47,36 @@ export default {
     err,
   }),
 
-  cancelBooking: (data) => ({
+  cancelBooking: (data, callback) => ({
     type: BOOKING_CANCEL,
     params: {
       data,
     },
+    callback,
   }),
   cancelBookingFail: (err) => ({
     type: BOOKING_CANCEL_FAIL,
     err,
   }),
-  checkinBooking: (data) => ({
+
+  checkinBooking: (data, callback) => ({
     type: BOOKING_CHECKIN,
     params: {
       data,
     },
+    callback,
   }),
   checkinBookingFail: (err) => ({
     type: BOOKING_CHECKIN_FAIL,
     err,
   }),
 
-  checkoutBooking: (data) => ({
+  checkoutBooking: (data, callback) => ({
     type: BOOKING_CHECKOUT,
     params: {
       data,
     },
+    callback,
   }),
   checkoutBookingFail: (err) => ({
     type: BOOKING_CHECKOUT_FAIL,

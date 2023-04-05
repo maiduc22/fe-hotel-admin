@@ -17,6 +17,7 @@ const ApproveBookingModal = ({
   isApproveBookingModalOpen,
   setIsApproveBookingModalOpen,
   bookingId,
+  fetchBooking,
 }) => {
   const [form] = Form.useForm();
   const [saleoff, setSaleoff] = useState(0);
@@ -24,14 +25,17 @@ const ApproveBookingModal = ({
 
   const handleOk = () => {
     dispatch(
-      actions.approveBooking({
-        bookingId: bookingId,
-        saleoff: saleoff,
-      })
+      actions.approveBooking(
+        {
+          bookingId: bookingId,
+          saleoff: saleoff,
+        },
+        () => fetchBooking()
+      )
     );
     form.resetFields();
     setIsApproveBookingModalOpen(false);
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleCancel = () => {
