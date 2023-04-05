@@ -13,7 +13,12 @@ const formItemLayout = {
   },
 };
 
-export default function UpdateServiceModal({ isOpen, setIsOpen, service }) {
+export default function UpdateServiceModal({
+  isOpen,
+  setIsOpen,
+  service,
+  fetchService,
+}) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -39,10 +44,10 @@ export default function UpdateServiceModal({ isOpen, setIsOpen, service }) {
       },
     };
     console.log(body);
-    dispatch(actions.updateService(body));
+    dispatch(actions.updateService(body, () => fetchService()));
     setIsOpen(false);
     form.resetFields();
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleCancelModal = () => {

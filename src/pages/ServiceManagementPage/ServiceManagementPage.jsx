@@ -15,9 +15,7 @@ export default function ServiceManagementPage() {
   const [_record, setRecord] = useState(null);
 
   const handleInactiveService = (serviceId) => {
-    dispatch(actions.inactiveService(serviceId));
-    fetchService();
-    window.location.reload();
+    dispatch(actions.inactiveService(serviceId, () => fetchService()));
   };
 
   const renderActiveStyle = (status) => {
@@ -84,6 +82,7 @@ export default function ServiceManagementPage() {
               isOpen={_isUpdateModalOpen}
               setIsOpen={setIsUpdateModalOpen}
               service={_record}
+              fetchService={fetchService}
             />
           </div>
         </div>
@@ -112,6 +111,7 @@ export default function ServiceManagementPage() {
         <CreateServiceModal
           isOpen={_isCreateModalOpen}
           setIsOpen={setIsCreateModalOpen}
+          fetchService={fetchService}
         />
       </div>
       <div className="w-full">

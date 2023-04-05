@@ -32,11 +32,12 @@ export default {
     err,
   }),
 
-  createService: (data) => ({
+  createService: (data, callback) => ({
     type: CREATE_SERVICE,
     params: {
       data,
     },
+    callback,
   }),
   createServiceSucceed: (data) => ({
     type: CREATE_SERVICE_SUCCEED,
@@ -47,11 +48,12 @@ export default {
     err,
   }),
 
-  updateService: (data) => ({
+  updateService: (data, callback) => ({
     type: UPDATE_SERVICE,
     params: {
       data,
     },
+    callback,
   }),
   updateServiceSucceed: (data) => ({
     type: UPDATE_SERVICE_SUCCEED,
@@ -79,11 +81,12 @@ export default {
     err,
   }),
 
-  inactiveService: (data) => ({
+  inactiveService: (data, callback) => ({
     type: INACTIVE_SERVICE,
     params: {
       data,
     },
+    callback,
   }),
   inactiveServiceSucceed: (data) => ({
     type: INACTIVE_SERVICE_SUCCEED,

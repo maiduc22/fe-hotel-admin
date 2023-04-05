@@ -1,5 +1,5 @@
 import { all, call, fork, put, takeLatest } from "redux-saga/effects";
-
+import { isFunction } from "lodash";
 import rf from "../../requests/RequestFactory";
 import utils from "../../utils";
 import actions from "../actions/services";
@@ -30,6 +30,9 @@ function* createService(action) {
       (params) => rf.getRequest("ServiceRequest").createService(params),
       action.params
     );
+    if (isFunction(action.callback)) {
+      yield action.callback();
+    }
     if (!data.hasErrors) {
       utils.showNotification(
         "Success",
@@ -49,6 +52,10 @@ function* updateService(action) {
       (params) => rf.getRequest("ServiceRequest").updateService(params),
       action.params
     );
+    if (isFunction(action.callback)) {
+      yield action.callback();
+    }
+    utils.showNotification("Success", "Update service successfully", "success");
   } catch (err) {
     console.log(err);
     yield put(actions.updateServiceFail(err));
@@ -60,6 +67,14 @@ function* inactiveService(action) {
     yield call(
       (params) => rf.getRequest("ServiceRequest").inactiveService(params),
       action.params
+    );
+    if (isFunction(action.callback)) {
+      yield action.callback();
+    }
+    utils.showNotification(
+      "Warning",
+      "Inactive service successfully",
+      "warning"
     );
   } catch (err) {
     console.log(err);
