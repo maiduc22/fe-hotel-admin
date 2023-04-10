@@ -13,7 +13,11 @@ const formItemLayout = {
   },
 };
 
-export default function CreateServiceModal({ isOpen, setIsOpen }) {
+export default function CreateServiceModal({
+  isOpen,
+  setIsOpen,
+  fetchService,
+}) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -23,10 +27,10 @@ export default function CreateServiceModal({ isOpen, setIsOpen }) {
 
   const handleCreateService = () => {
     const data = { name: _name, price: _price, description: _description };
-    dispatch(actions.createService(data));
+    dispatch(actions.createService(data, () => fetchService()));
     setIsOpen(false);
     form.resetFields();
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleCancelModal = () => {

@@ -19,6 +19,7 @@ const UpdateRoomModal = ({
   isUpdateRoomModalOpen,
   setUpdateRoomModalOpen,
   room,
+  fetchRooms,
 }) => {
   const [form] = Form.useForm();
 
@@ -33,13 +34,16 @@ const UpdateRoomModal = ({
 
   const updateRoom = (data) => {
     dispatch(
-      actions.udpateRoom({
-        roomId: room.id,
-        body: data,
-      })
+      actions.udpateRoom(
+        {
+          roomId: room.id,
+          body: data,
+        },
+        () => fetchRooms()
+      )
     );
-    utils.showNotification("Success", "Update room successfullt", "success");
-    window.location.reload();
+    // utils.showNotification("Success", "Update room successfullt", "success");
+    // window.location.reload();
   };
 
   const handleOk = (value) => {

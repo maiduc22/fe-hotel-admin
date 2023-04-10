@@ -108,6 +108,7 @@ export default function RoomManagementPage() {
               isUpdateRoomModalOpen={isUpdateRoomModalOpen}
               setUpdateRoomModalOpen={setIsUpdateRoomModalOpen}
               room={currentRecord}
+              fetchRooms={fetchRooms}
             />
           </Tooltip>
         </div>
@@ -126,11 +127,11 @@ export default function RoomManagementPage() {
   const rooms = useSelector((state) => state.room_reducer).rooms;
 
   const handleBlockRoom = (roomId) => {
-    dispatch(actions.blockRoom(roomId));
+    dispatch(actions.blockRoom(roomId, () => fetchRooms()));
   };
 
   const handleUnblockRoom = (roomId) => {
-    console.log("Unblock", roomId);
+    dispatch(actions.unblockRoom(roomId, () => fetchRooms()));
   };
 
   return (
@@ -142,6 +143,7 @@ export default function RoomManagementPage() {
         <AddRoomModal
           isAddRoomModalOpen={isAddRoomModalOpen}
           setAddRoomModalOpen={setIsAddRoomModalOpen}
+          fetchRooms={fetchRooms}
         />
       </div>
       <div className="w-full">

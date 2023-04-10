@@ -6,7 +6,7 @@ import {
   takeEvery,
   takeLatest,
 } from "redux-saga/effects";
-
+import { isFunction } from "lodash";
 import rf from "../../requests/RequestFactory";
 import utils from "../../utils";
 import actions from "../actions/bookings";
@@ -37,6 +37,10 @@ function* cancelBooking(action) {
       (params) => rf.getRequest("BookingRequest").cancelBooking(params),
       action.params
     );
+    if (isFunction(action.callback)) {
+      yield action.callback();
+    }
+    utils.showNotification("Success", "Cancel booking successfully", "success");
   } catch (err) {
     console.log(err);
     yield put(actions.cancelBookingFail(err));
@@ -48,6 +52,14 @@ function* approveBooking(action) {
     yield call(
       (params) => rf.getRequest("BookingRequest").approveBooking(params),
       action.params
+    );
+    if (isFunction(action.callback)) {
+      yield action.callback();
+    }
+    utils.showNotification(
+      "Success",
+      "Approve booking successfully",
+      "success"
     );
   } catch (err) {
     console.log(err);
@@ -61,6 +73,14 @@ function* checkinBooking(action) {
       (params) => rf.getRequest("BookingRequest").checkinBooking(params),
       action.params
     );
+    if (isFunction(action.callback)) {
+      yield action.callback();
+    }
+    utils.showNotification(
+      "Success",
+      "Checkin booking successfully",
+      "success"
+    );
   } catch (err) {
     console.log(err);
     yield put(action.cancelBookingFail(err));
@@ -73,6 +93,10 @@ function* checkoutBooking(action) {
       (params) => rf.getRequest("BookingRequest").checkoutBooking(params),
       action.params
     );
+    if (isFunction(action.callback)) {
+      yield action.callback();
+    }
+    utils.showNotification("Success", "Checkout booking successfully", "success");
     console.log(data);
   } catch (err) {}
 }

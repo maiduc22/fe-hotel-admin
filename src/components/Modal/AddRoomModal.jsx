@@ -15,7 +15,11 @@ const formItemLayout = {
   },
 };
 
-const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
+const AddRoomModal = ({
+  isAddRoomModalOpen,
+  setAddRoomModalOpen,
+  fetchRooms,
+}) => {
   const [form] = Form.useForm();
 
   const [_roomName, setRoomName] = useState("");
@@ -29,8 +33,8 @@ const AddRoomModal = ({ isAddRoomModalOpen, setAddRoomModalOpen }) => {
 
   const addRoom = (data) => {
     console.log(data);
-    dispatch(actions.addRoom(data));
-    window.location.reload();
+    dispatch(actions.addRoom(data, () => fetchRooms()));
+    // window.location.reload();
   };
 
   const handleOk = () => {

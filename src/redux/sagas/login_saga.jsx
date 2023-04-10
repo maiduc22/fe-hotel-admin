@@ -24,6 +24,13 @@ function* register(action) {
       action.params
     );
     yield put(actions.registerSucceed(data));
+    if (!data.hasError) {
+      utils.showNotification(
+        "Success",
+        "Create new account successfully",
+        "success"
+      );
+    }
   } catch (err) {
     console.log(err);
     yield put(actions.registerFail(err));
