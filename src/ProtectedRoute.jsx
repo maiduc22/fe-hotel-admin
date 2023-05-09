@@ -1,18 +1,15 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { ROUTERS } from "./config/routers";
 
 export const ProtectedRoute = ({ children }) => {
   const isAuth = useSelector((state) => state).isAuth;
   const rememberAuth = localStorage.getItem("isAuth");
 
-  const navigate = useNavigate();
-
   if (rememberAuth || isAuth) {
     return children;
   } else {
-    return <Navigate to={"/login"} />;
+    return <Navigate to={ROUTERS.LOGIN} />;
   }
 };

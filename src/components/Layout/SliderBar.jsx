@@ -3,6 +3,7 @@ import { Menu, Layout } from "antd";
 const { Sider } = Layout;
 import { Link, useLocation } from "react-router-dom";
 import utils from "../../utils";
+import { ROUTERS } from "../../config/routers";
 
 export default function SliderBar() {
   const location = useLocation();
@@ -12,42 +13,59 @@ export default function SliderBar() {
   const menuItems = isAdmin
     ? [
         {
-          key: "/room-management",
-          label: <Link to={"/room-management"}>Rooms management</Link>,
+          key: ROUTERS.ROOM_MANAGEMENT,
+          label: <Link to={ROUTERS.ROOM_MANAGEMENT}>Room management</Link>,
         },
         {
-          key: "/booking-management",
-          label: <Link to={"/booking-management"}>Bookings management</Link>,
+          key: ROUTERS.BOOKING_MANAGEMENT,
+          label: (
+            <Link to={ROUTERS.BOOKING_MANAGEMENT}>Booking management</Link>
+          ),
         },
         {
-          key: "/service-management",
-          label: <Link to={"/service-management"}>Service management</Link>,
+          key: ROUTERS.SERVICE_MANAGEMENT,
+          label: (
+            <Link to={ROUTERS.SERVICE_MANAGEMENT}>Service management</Link>
+          ),
         },
         {
-          key: "/create-account",
-          label: <Link to={"/create-account"}>Create account </Link>,
+          key: ROUTERS.EMPLOYEE_MANAGEMENT,
+          label: (
+            <Link to={ROUTERS.EMPLOYEE_MANAGEMENT}>Staff management </Link>
+          ),
         },
         {
-          key: "/profit",
-          label: <Link to={"/profit"}>Statistic </Link>,
+          key: ROUTERS.CUSTOMER_MANAGEMENT,
+          label: (
+            <Link to={ROUTERS.CUSTOMER_MANAGEMENT}>Customer management </Link>
+          ),
+        },
+        {
+          key: ROUTERS.PROFIT_MANAGEMENT,
+          label: <Link to={ROUTERS.PROFIT_MANAGEMENT}>Statistic </Link>,
         },
       ]
     : [
         {
-          key: "/room-management",
-          label: <Link to={"/room-management"}>Rooms management</Link>,
+          key: ROUTERS.ROOM_MANAGEMENT,
+          label: <Link to={ROUTERS.ROOM_MANAGEMENT}>Room management</Link>,
         },
         {
-          key: "/booking-management",
-          label: <Link to={"/booking-management"}>Bookings management</Link>,
+          key: ROUTERS.BOOKING_MANAGEMENT,
+          label: (
+            <Link to={ROUTERS.BOOKING_MANAGEMENT}>Booking management</Link>
+          ),
         },
         {
-          key: "/service-management",
-          label: <Link to={"/service-management"}>Service management</Link>,
+          key: ROUTERS.SERVICE_MANAGEMENT,
+          label: (
+            <Link to={ROUTERS.SERVICE_MANAGEMENT}>Service management</Link>
+          ),
         },
       ];
   return (
     <Sider
+      width={250}
       style={{
         overflow: "auto",
         height: "100%",
@@ -55,44 +73,18 @@ export default function SliderBar() {
         left: 0,
       }}
     >
-      <div className="logo text-white text-lg font-extrabold h-12 flex items-center justify-center w-full">
-        {" "}
+      <div className="logo text-white text-xl font-bold h-16 flex items-center justify-center w-full">
         Hotel Management
       </div>
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={[path !== "/" ? path : "/room-management"]}
+        defaultSelectedKeys={[
+          path !== ROUTERS.HOME ? path : ROUTERS.ROOM_MANAGEMENT,
+        ]}
         className="mt-2 font-bold"
         items={menuItems}
-      >
-        {/* <Menu.Item key="/room-management">
-          {" "}
-          <Link to={"/room-management"}>Rooms management</Link>
-        </Menu.Item>
-        <Menu.Item key="/booking-management">
-          {" "}
-          <Link to={"/booking-management"}>Bookings management</Link>
-        </Menu.Item>
-        <Menu.Item key="/service-management">
-          {" "}
-          <Link to={"/service-management"}>Service management</Link>
-        </Menu.Item>
-        {isAdmin ? (
-          <>
-            <Menu.Item key="/create-account">
-              {" "}
-              <Link to={"/create-account"}>Create account </Link>
-            </Menu.Item>
-            <Menu.Item key="/profit">
-              {" "}
-              <Link to={"/profit"}>Statistic </Link>
-            </Menu.Item>
-          </>
-        ) : (
-          ""
-        )} */}
-      </Menu>
+      ></Menu>
     </Sider>
   );
 }

@@ -96,8 +96,11 @@ function* checkoutBooking(action) {
     if (isFunction(action.callback)) {
       yield action.callback();
     }
-    utils.showNotification("Success", "Checkout booking successfully", "success");
-    console.log(data);
+    utils.showNotification(
+      "Success",
+      "Checkout booking successfully",
+      "success"
+    );
   } catch (err) {}
 }
 

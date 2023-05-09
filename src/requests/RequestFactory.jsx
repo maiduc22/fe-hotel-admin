@@ -3,6 +3,8 @@ import RoomRequest from "./RoomRequest";
 import BookingRequest from "./BookingRequest";
 import ServiceRequest from "./ServiceRequest";
 import StatisticRequest from "./StatisticRequest";
+import EmployeeRequest from "./EmployeeRequest";
+import CustomerRequest from "./CustomerRequest";
 
 const requestMap = {
   LoginRequest,
@@ -10,6 +12,8 @@ const requestMap = {
   BookingRequest,
   ServiceRequest,
   StatisticRequest,
+  EmployeeRequest,
+  CustomerRequest,
 };
 
 const instances = {};

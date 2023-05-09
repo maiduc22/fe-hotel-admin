@@ -4,6 +4,7 @@ import watchAllUsers from "./login_saga";
 import watchAllRooms from "./room_saga";
 import watchService from "./service_saga";
 import watchStats from "./stats_saga";
+import watchEmployee from "./employee_saga";
 
 function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ function* rootSaga() {
     watchBooking(),
     watchService(),
     watchStats(),
+    watchEmployee(),
   ]);
 }
 

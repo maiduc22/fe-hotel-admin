@@ -4,7 +4,7 @@ const schema = "auth";
 
 export default class LoginRequest extends BaseRequest {
   register(params) {
-    console.log(params);
+    
     const url = `${schema}/register`;
     return this.post(url, params.data);
   }

@@ -19,8 +19,10 @@ import WrapContainer from "./components/Layout/Layout";
 import BookingManagementPage from "./pages/BookingManagementPage/BookingManagementPage";
 import { ProfitManagementPage } from "./pages/ProfitManagementPage/ProfitManagementPage";
 import ServiceManagementPage from "./pages/ServiceManagementPage/ServiceManagementPage";
-import { CreateEmployeeAccountPage } from "./pages/CreateEmployeeAcountPage/CreateEmployeeAccountPage";
+import EmployeeManagementPage from "./pages/EmployeeManagementPage/EmployeeManagementPage";
 import { BillDetails } from "./components/BillDetails/BillDetais";
+import { ROUTERS } from "./config/routers";
+import CustomerManagementPage from "./pages/CustomerManagementPage/CustomerManagementPage";
 
 const AppLayout = () => (
   <ProtectedRoute>
@@ -35,19 +37,19 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: "/",
-        element: <Navigate to="/room-management" />,
+        path: ROUTERS.HOME,
+        element: <Navigate to={ROUTERS.ROOM_MANAGEMENT} />,
       },
       {
-        path: "/room-management",
+        path: ROUTERS.ROOM_MANAGEMENT,
         element: <RoomManagementPage />,
       },
       {
-        path: "/booking-management",
+        path: ROUTERS.BOOKING_MANAGEMENT,
         element: <BookingManagementPage />,
       },
       {
-        path: "/bills",
+        path: ROUTERS.BILLS,
         element: <BookingManagementPage />,
       },
       {
@@ -55,22 +57,26 @@ const router = createBrowserRouter([
         element: <BillDetails />,
       },
       {
-        path: "/service-management",
+        path: ROUTERS.SERVICE_MANAGEMENT,
         element: <ServiceManagementPage />,
       },
       {
-        path: "/create-account",
-        element: <CreateEmployeeAccountPage />,
+        path: ROUTERS.EMPLOYEE_MANAGEMENT,
+        element: <EmployeeManagementPage />,
       },
       {
-        path: "/profit",
+        path: ROUTERS.PROFIT_MANAGEMENT,
         element: <ProfitManagementPage />,
+      },
+      {
+        path: ROUTERS.CUSTOMER_MANAGEMENT,
+        element: <CustomerManagementPage />,
       },
     ],
   },
   {
     element: <LoginPage />,
-    path: "/login",
+    path: ROUTERS.LOGIN,
   },
 ]);
 

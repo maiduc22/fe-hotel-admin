@@ -13,7 +13,7 @@ const { TabPane } = Tabs;
 
 export const ProfitManagementPage = () => {
   const isUserAdmin = utils.isAdmin();
-  console.log(isUserAdmin);
+
   const dispatch = useDispatch();
 
   const getMonthlyStats = () => {
@@ -39,7 +39,7 @@ export const ProfitManagementPage = () => {
   const serviceStats = useSelector(
     (state) => state.statistics_reducer.servicesStat
   );
-  console.log(serviceStats);
+
   const items = [
     {
       key: "1",

@@ -1,7 +1,7 @@
-import { BASE_URL } from "../consts";
+import { BASE_URL } from "../config/consts";
 import React from "react";
 import { get } from "lodash";
-import axios from "../axios";
+import axios from "../config/axios";
 import utils from "../utils";
 export default class BaseRequest {
   version = "v1";
@@ -59,7 +59,6 @@ export default class BaseRequest {
 
   responseHanlder(response) {
     const { data } = response;
-    console.log(data);
     return data;
   }
 

@@ -2,6 +2,7 @@ import * as React from "react";
 import { Layout, Dropdown, Menu } from "antd";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { ROUTERS } from "../../config/routers";
 const { Header } = Layout;
 
 const NavHeader = ({ title }) => {
@@ -9,9 +10,8 @@ const NavHeader = ({ title }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate("/login");
+    navigate(ROUTERS.LOGIN);
     localStorage.clear();
-    console.log("Logout ");
   };
 
   const menu = (
@@ -23,7 +23,7 @@ const NavHeader = ({ title }) => {
   );
 
   return (
-    <Header className="site-layout-background h-12 flex items-center justify-end text-white font-bold">
+    <Header className="site-layout-background h-16 flex items-center justify-end text-white font-bold">
       <div className="">Hello {userInfo.sub}</div>
       <Dropdown
         overlay={menu}

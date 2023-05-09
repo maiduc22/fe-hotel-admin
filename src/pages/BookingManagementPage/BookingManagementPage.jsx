@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import ApproveBookingModal from "../../components/Modal/ApproveBookingModal";
 import ServiceModal from "../../components/Modal/ServiceModal";
 import actions from "../../redux/actions/bookings";
+import { ROUTERS } from "../../config/routers";
 
 export default function BookingManagementPage() {
   const [isApproveBookingModalOpen, setIsApproveBookingModalOpen] =
@@ -31,12 +32,10 @@ export default function BookingManagementPage() {
 
   const handleCheckIn = (bookingId) => {
     dispatch(actions.checkinBooking(bookingId, () => fetchBooking()));
-    // window.location.reload();
   };
 
   const handleViewBillDetails = (bookingId) => {
-    // dispatch(actions.checkoutBooking(bookingId));
-    navigate(`/bill-details/${bookingId}`);
+    navigate(`${ROUTERS.BILL_DETAILS}/${bookingId}`);
   };
 
   const dispatch = useDispatch();
@@ -82,20 +81,6 @@ export default function BookingManagementPage() {
       render: (room) => room.map((r, index) => r.name).join(" - "),
       align: "center",
     },
-    // {
-    //   title: "Check-In Time",
-    //   dataIndex: "rooms",
-    //   key: "checkIn",
-    //   render: (room) => room[0].checkout.split("T")[0],
-    //   align: "center",
-    // },
-    // {
-    //   title: "Check-Out Time",
-    //   dataIndex: "rooms",
-    //   key: "checkOut",
-    //   render: (room) => room[0].checkin.split("T")[0],
-    //   align: "center",
-    // },
     {
       title: "Status",
       dataIndex: "status",

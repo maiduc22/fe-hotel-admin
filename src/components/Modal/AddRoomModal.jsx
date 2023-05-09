@@ -2,7 +2,7 @@ import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { storage } from "../../firebase";
+import { storage } from "../../config/firebase";
 import actions from "../../redux/actions/rooms";
 import utils from "../../utils/index";
 
@@ -32,7 +32,6 @@ const AddRoomModal = ({
   const dispatch = useDispatch();
 
   const addRoom = (data) => {
-    console.log(data);
     dispatch(actions.addRoom(data, () => fetchRooms()));
     // window.location.reload();
   };
@@ -82,7 +81,7 @@ const AddRoomModal = ({
       title="Add New Room"
       open={isAddRoomModalOpen}
       onCancel={handleCancel}
-      footer={""}
+      footer={null}
     >
       <Form
         style={{ maxWidth: 600 }}
@@ -151,7 +150,7 @@ const AddRoomModal = ({
           }}
         >
           <Button type="primary" htmlType="submit">
-            Submit
+            Create
           </Button>
         </Form.Item>
       </Form>

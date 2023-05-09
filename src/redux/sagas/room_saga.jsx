@@ -30,6 +30,7 @@ function* addRoom(action) {
       (params) => rf.getRequest("RoomRequest").addRoom(params),
       action.params
     );
+    console.log(action.params);
     if (isFunction(action.callback)) {
       yield action.callback();
     }

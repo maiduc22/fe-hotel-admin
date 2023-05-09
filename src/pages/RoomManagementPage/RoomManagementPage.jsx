@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import AddRoomModal from "../../components/Modal/AddRoomModal";
-import { AVAILABLE_COLOR, BOOKED_COLOR } from "../../consts";
+import { AVAILABLE_COLOR, BOOKED_COLOR } from "../../config/consts";
 import actions from "../../redux/actions/rooms";
 import utils from "../../utils";
 import UpdateRoomModal from "../../components/Modal/UpdateRoomModal";

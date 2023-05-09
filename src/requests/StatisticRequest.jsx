@@ -1,4 +1,4 @@
-import { BASE_URL } from "../consts";
+
 import BaseRequest from "./BaseRequest";
 
 const schema = "stats";

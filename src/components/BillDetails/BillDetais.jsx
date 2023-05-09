@@ -2,8 +2,8 @@ import { Card, Col, Descriptions, Row, Tabs, Typography } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "../../axios";
-import { BASE_URL } from "../../consts";
+import axios from "../../config/axios";
+import { BASE_URL } from "../../config/consts";
 const { Title, Text } = Typography;
 
 const billData = {
@@ -20,7 +20,6 @@ export const BillDetails = () => {
     try {
       const response = await axios.get(`${BASE_URL}/v1/bills/${bookingId}`);
       setBillData(response.data.data);
-      console.log(response.data.data);
     } catch (err) {
       console.error(err);
     }

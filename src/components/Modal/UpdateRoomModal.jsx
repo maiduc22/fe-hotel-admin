@@ -2,7 +2,7 @@ import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { storage } from "../../firebase";
+import { storage } from "../../config/firebase";
 import actions from "../../redux/actions/rooms";
 import utils from "../../utils";
 
@@ -48,8 +48,6 @@ const UpdateRoomModal = ({
 
   const handleOk = (value) => {
     if (_fileImage == null) {
-      console.log("Khong co anh");
-      console.log(room?.image);
       Object.assign(value, { image: room?.image });
       updateRoom(value);
     } else {

@@ -13,7 +13,7 @@ export default class WrapContainer extends React.Component {
     return (
       <Layout>
         <SliderBar />
-        <Layout className="site-layout" style={{ marginLeft: 200 }}>
+        <Layout className="site-layout" style={{ marginLeft: 250 }}>
           <NavHeader />
           <Content
             style={{

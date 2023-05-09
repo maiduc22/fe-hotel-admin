@@ -43,7 +43,7 @@ export default function UpdateServiceModal({
         description: _description ? _description : initialValues.description,
       },
     };
-    console.log(body);
+
     dispatch(actions.updateService(body, () => fetchService()));
     setIsOpen(false);
     form.resetFields();

@@ -4,6 +4,8 @@ import room_reducer from "./room_reducer";
 import booking_reducer from "./booking_reducer";
 import service_reducer from "./service_reducer";
 import statistics_reducer from "./statistics_reducer";
+import employee_reducer from "./employee_reducer";
+import customer_reducer from "./customer_reducer";
 
 const allReducers = combineReducers({
   login_reducer,
@@ -11,6 +13,8 @@ const allReducers = combineReducers({
   booking_reducer,
   service_reducer,
   statistics_reducer,
+  employee_reducer,
+  customer_reducer,
 });
 
 export default allReducers;
