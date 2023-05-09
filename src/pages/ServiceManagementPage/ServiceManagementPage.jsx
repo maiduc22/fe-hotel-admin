@@ -67,7 +67,7 @@ export default function ServiceManagementPage() {
       title: "Actions",
       align: "center",
       key: "actions",
-      render: (record, status) => (
+      render: (record, index) => (
         <div key={record.id}>
           <div className="flex items-center justify-center gap-4">
             <Tooltip title="Update Service">
@@ -78,7 +78,17 @@ export default function ServiceManagementPage() {
                 }}
               />
             </Tooltip>
-            {status == "INACTIVE" ? (
+            {record.status === "INACTIVE" ? (
+              <Popconfirm
+                title="Active service"
+                description="Do you want to active this service"
+                onConfirm={() => handleActiveService(record.id)}
+              >
+                <Tooltip title="Active Service">
+                <AiFillUnlock />
+                </Tooltip>
+              </Popconfirm>
+            ) : (
               <Popconfirm
                 title="Inactive service"
                 description="Do you want to inactive this service"
@@ -86,16 +96,6 @@ export default function ServiceManagementPage() {
               >
                 <Tooltip title="Inactive Service">
                   <BiBlock />
-                </Tooltip>
-              </Popconfirm>
-            ) : (
-              <Popconfirm
-                title="Active service"
-                description="Do you want to active this service"
-                onConfirm={() => handleActiveService(record.id)}
-              >
-                <Tooltip title="Active Service">
-                  <AiFillUnlock />
                 </Tooltip>
               </Popconfirm>
             )}
