@@ -4,31 +4,32 @@ import { useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { HiOutlineLockOpen } from "react-icons/hi";
 import { AddEmployeeModal } from "../../components/Modal/AddEmployeeModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import actions from "../../redux/actions/employees";
 
 const EmployeeManagementPage = () => {
+  const dispatch = useDispatch();
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
-  const [isUpdateEmployeeModalOpen, setIsUpdateEmployeeModalOpen] =
-    useState(false);
+  const [isUpdateEmployeeModalOpen, setIsUpdateEmployeeModalOpen] = useState(false);
   const [currentRecord, setCurrentRecord] = useState(null);
 
   const columns = [
     {
       title: "Full name",
       key: "fullname",
-      dataIndex: "fullname",
+      dataIndex: "fullName",
       align: "center",
     },
     {
       title: "Username",
       key: "username",
-      dataIndex: "username",
+      dataIndex: "userName",
       align: "center",
     },
     {
       title: "Role",
       key: "role",
-      dataIndex: "role",
+      dataIndex: "position",
       align: "center",
     },
     {
@@ -47,11 +48,7 @@ const EmployeeManagementPage = () => {
           </Tooltip>
 
           <Tooltip title="Delete Employee">
-            <Popconfirm
-              title="Do you want to delete this employee"
-              okText="Yes"
-              cancelText="No"
-            >
+            <Popconfirm title="Do you want to delete this employee" okText="Yes" cancelText="No">
               <HiOutlineLockOpen />
             </Popconfirm>
           </Tooltip>
@@ -60,20 +57,20 @@ const EmployeeManagementPage = () => {
     },
   ];
 
-  const fetchEmployees = () => {};
+  const fetchEmployees = () => {
+    dispatch(actions.getEmployee());
+  };
 
   useEffect(() => {
     fetchEmployees();
-  });
+  }, []);
 
-  const employees = useSelector((state) => state);
+  const employees = useSelector((state) => state.employee_reducer.employees);
 
   return (
     <div className="w-full ">
       <div className="w-full mb-10 flex justify-end">
-        <Button onClick={() => setIsAddEmployeeModalOpen(true)}>
-          Add new staff
-        </Button>
+        <Button onClick={() => setIsAddEmployeeModalOpen(true)}>Add new staff</Button>
 
         <AddEmployeeModal
           isAddEmployeeModalOpen={isAddEmployeeModalOpen}
@@ -82,7 +79,7 @@ const EmployeeManagementPage = () => {
         />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={[]} rowKey={"id"} />
+        <Table columns={columns} dataSource={employees} rowKey={"id"} />
       </div>
     </div>
   );

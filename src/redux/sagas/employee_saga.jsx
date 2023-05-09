@@ -1,8 +1,5 @@
 import { all, call, fork, put, takeLatest } from "redux-saga/effects";
-import {
-  GET_EMPLOYEE,
-  UPDATE_EMPLOYEE,
-} from "../actions/employees/action_types";
+import { GET_EMPLOYEE, UPDATE_EMPLOYEE } from "../actions/employees/action_types";
 import rf from "../../requests/RequestFactory";
 import actions from "../actions/employees";
 import { isFunction } from "lodash";
@@ -10,10 +7,7 @@ import utils from "../../utils";
 
 function* getEmployee(action) {
   try {
-    yield ({ data } = call(
-      (params) => rf.getRequest("EmployeeRequest").getEmployee(params),
-      action.params
-    ));
+    const { data } = yield call((params) => rf.getRequest("EmployeeRequest").getEmployee(params), action.params);
     yield put(actions.getEmployeeSucceed(data.data));
   } catch (err) {
     console.log(err);
@@ -23,18 +17,11 @@ function* getEmployee(action) {
 
 function* updateEmployee(action) {
   try {
-    yield call(
-      (params) => rf.getRequest("EmployeeRequest").updateEmployee(params),
-      action.params
-    );
+    yield call((params) => rf.getRequest("EmployeeRequest").updateEmployee(params), action.params);
     if (isFunction(action.callback)) {
       yield action.callback();
     }
-    utils.showNotification(
-      "Success",
-      "Update employee successfully",
-      "success"
-    );
+    utils.showNotification("Success", "Update employee successfully", "success");
   } catch (err) {
     yield put(actions.updateEmployeeFail(err));
   }

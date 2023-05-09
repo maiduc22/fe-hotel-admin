@@ -1,6 +1,7 @@
 import { Table } from "antd";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import actions from "../../redux/actions/customers";
 
 const CustomerManagementPage = () => {
   const columns = [
@@ -32,13 +33,17 @@ const CustomerManagementPage = () => {
 
   const dispatch = useDispatch();
 
-  const fetchCustomers = () => {};
+  const fetchCustomers = () => {
+    dispatch(actions.getCustomer());
+  };
 
   useEffect(() => fetchCustomers(), []);
 
+  const customers = useSelector((state) => state.customer_reducer.customers);
+
   return (
     <div className="w-full">
-      <Table columns={columns} dataSource={[]} rowKey={"id"} />
+      <Table columns={columns} dataSource={[customers]} rowKey={"key"} />
     </div>
   );
 };

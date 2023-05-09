@@ -16,20 +16,17 @@ import {
 } from "../actions/login/action_types";
 import utils from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { isFunction } from "lodash";
 
 function* register(action) {
   try {
-    const { data } = yield call(
-      (params) => rf.getRequest("LoginRequest").register(params),
-      action.params
-    );
+    const { data } = yield call((params) => rf.getRequest("LoginRequest").register(params), action.params);
     yield put(actions.registerSucceed(data));
+    if (isFunction(action.callback)) {
+      yield action.callback();
+    }
     if (!data.hasError) {
-      utils.showNotification(
-        "Success",
-        "Create new account successfully",
-        "success"
-      );
+      utils.showNotification("Success", "Create new account successfully", "success");
     }
   } catch (err) {
     console.log(err);
@@ -39,10 +36,7 @@ function* register(action) {
 
 function* login(action) {
   try {
-    const { data } = yield call(
-      (params) => rf.getRequest("LoginRequest").login(params),
-      action.params
-    );
+    const { data } = yield call((params) => rf.getRequest("LoginRequest").login(params), action.params);
     if (data && !data.hasErr) {
       utils.showNotification("Success", "Login successfully", "success");
       const decodedToken = jwtDecode(data.data);

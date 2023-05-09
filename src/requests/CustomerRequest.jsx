@@ -4,7 +4,7 @@ const schema = "";
 
 export default class CustomerRequest extends BaseRequest {
   getCustomer() {
-    const url = ``;
+    const url = `clients`;
     return this.get(url);
   }
 }

@@ -1,19 +1,16 @@
 import BaseRequest from "./BaseRequest";
 
-const schema = "";
+const schema = "users";
 
 export default class EmployeeRequest extends BaseRequest {
   getEmployee() {
-    const url = "";
+    const url = `${schema}`;
+    console.log(url);
     return this.get(url);
   }
 
-  createEmployee(params) {
-    const url = "";
-    return this.post(url, params);
-  }
-
   updateEmployee(params) {
+    console.log(params);
     const url = "";
     return this.post(url, params);
   }
