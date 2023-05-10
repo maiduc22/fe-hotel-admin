@@ -18,27 +18,19 @@ export default function SliderBar() {
         },
         {
           key: ROUTERS.BOOKING_MANAGEMENT,
-          label: (
-            <Link to={ROUTERS.BOOKING_MANAGEMENT}>Booking management</Link>
-          ),
+          label: <Link to={ROUTERS.BOOKING_MANAGEMENT}>Booking management</Link>,
         },
         {
           key: ROUTERS.SERVICE_MANAGEMENT,
-          label: (
-            <Link to={ROUTERS.SERVICE_MANAGEMENT}>Service management</Link>
-          ),
+          label: <Link to={ROUTERS.SERVICE_MANAGEMENT}>Service management</Link>,
         },
         {
           key: ROUTERS.EMPLOYEE_MANAGEMENT,
-          label: (
-            <Link to={ROUTERS.EMPLOYEE_MANAGEMENT}>Staff management </Link>
-          ),
+          label: <Link to={ROUTERS.EMPLOYEE_MANAGEMENT}>Staff management </Link>,
         },
         {
           key: ROUTERS.CUSTOMER_MANAGEMENT,
-          label: (
-            <Link to={ROUTERS.CUSTOMER_MANAGEMENT}>Customer management </Link>
-          ),
+          label: <Link to={ROUTERS.CUSTOMER_MANAGEMENT}>Customer management </Link>,
         },
         {
           key: ROUTERS.PROFIT_MANAGEMENT,
@@ -52,15 +44,15 @@ export default function SliderBar() {
         },
         {
           key: ROUTERS.BOOKING_MANAGEMENT,
-          label: (
-            <Link to={ROUTERS.BOOKING_MANAGEMENT}>Booking management</Link>
-          ),
+          label: <Link to={ROUTERS.BOOKING_MANAGEMENT}>Booking management</Link>,
         },
         {
           key: ROUTERS.SERVICE_MANAGEMENT,
-          label: (
-            <Link to={ROUTERS.SERVICE_MANAGEMENT}>Service management</Link>
-          ),
+          label: <Link to={ROUTERS.SERVICE_MANAGEMENT}>Service management</Link>,
+        },
+        {
+          key: ROUTERS.CUSTOMER_MANAGEMENT,
+          label: <Link to={ROUTERS.CUSTOMER_MANAGEMENT}>Customer management </Link>,
         },
       ];
   return (
@@ -73,15 +65,11 @@ export default function SliderBar() {
         left: 0,
       }}
     >
-      <div className="logo text-white text-xl font-bold h-16 flex items-center justify-center w-full">
-        Hotel Management
-      </div>
+      <div className="logo text-white text-xl font-bold h-16 flex items-center justify-center w-full">Hotel Management</div>
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={[
-          path !== ROUTERS.HOME ? path : ROUTERS.ROOM_MANAGEMENT,
-        ]}
+        defaultSelectedKeys={[path !== ROUTERS.HOME ? path : ROUTERS.ROOM_MANAGEMENT]}
         className="mt-2 font-bold"
         items={menuItems}
       ></Menu>
