@@ -145,7 +145,7 @@ export default function RoomManagementPage() {
         />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={rooms} rowKey="id" pagination={{ pageSize: 2 }}></Table>
+        <Table columns={columns} dataSource={rooms} rowKey="id" pagination={{ pageSize: 10 }}></Table>
       </div>
     </div>
   );
