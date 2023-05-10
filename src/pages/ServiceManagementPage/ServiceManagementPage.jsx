@@ -77,6 +77,12 @@ export default function ServiceManagementPage() {
                   setRecord(record);
                 }}
               />
+              <UpdateServiceModal
+                isOpen={_isUpdateModalOpen}
+                setIsOpen={setIsUpdateModalOpen}
+                service={_record}
+                fetchService={fetchService}
+              />
             </Tooltip>
             {record.status === "INACTIVE" ? (
               <Popconfirm
@@ -85,7 +91,7 @@ export default function ServiceManagementPage() {
                 onConfirm={() => handleActiveService(record.id)}
               >
                 <Tooltip title="Active Service">
-                <AiFillUnlock />
+                  <AiFillUnlock />
                 </Tooltip>
               </Popconfirm>
             ) : (
@@ -99,13 +105,6 @@ export default function ServiceManagementPage() {
                 </Tooltip>
               </Popconfirm>
             )}
-
-            <UpdateServiceModal
-              isOpen={_isUpdateModalOpen}
-              setIsOpen={setIsUpdateModalOpen}
-              service={_record}
-              fetchService={fetchService}
-            />
           </div>
         </div>
       ),
@@ -127,14 +126,8 @@ export default function ServiceManagementPage() {
   return (
     <div className="w-full ">
       <div className="w-full mb-10 flex justify-end">
-        <Button onClick={() => setIsCreateModalOpen(true)}>
-          Create new Service
-        </Button>
-        <CreateServiceModal
-          isOpen={_isCreateModalOpen}
-          setIsOpen={setIsCreateModalOpen}
-          fetchService={fetchService}
-        />
+        <Button onClick={() => setIsCreateModalOpen(true)}>Create new Service</Button>
+        <CreateServiceModal isOpen={_isCreateModalOpen} setIsOpen={setIsCreateModalOpen} fetchService={fetchService} />
       </div>
       <div className="w-full">
         <Table columns={columns} dataSource={service} rowKey="id" />

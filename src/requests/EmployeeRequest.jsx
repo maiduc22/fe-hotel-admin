@@ -5,13 +5,16 @@ const schema = "users";
 export default class EmployeeRequest extends BaseRequest {
   getEmployee() {
     const url = `${schema}`;
-    console.log(url);
     return this.get(url);
   }
 
   updateEmployee(params) {
-    console.log(params);
-    const url = "";
-    return this.post(url, params);
+    const url = `${schema}/${params.id}`;
+    return this.put(url, params.body);
+  }
+
+  toggleEmployee(params) {
+    const url = `${schema}/toggle?userId=${params.id}`;
+    return this.get(url);
   }
 }

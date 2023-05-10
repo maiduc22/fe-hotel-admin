@@ -1,4 +1,4 @@
-import { Button, Popconfirm, Table, Tooltip } from "antd";
+import { Button, Popconfirm, Table, Tag, Tooltip } from "antd";
 import { useEffect } from "react";
 import { useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
@@ -6,6 +6,7 @@ import { HiOutlineLockOpen } from "react-icons/hi";
 import { AddEmployeeModal } from "../../components/Modal/AddEmployeeModal";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../redux/actions/employees";
+import UpdateEmployeeModal from "../../components/Modal/UpdateEmployeeModal";
 
 const EmployeeManagementPage = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,14 @@ const EmployeeManagementPage = () => {
       key: "role",
       dataIndex: "position",
       align: "center",
+      render: (role) => <div>{role === "ROLE_MANAGER" ? "MANAGER" : "STAFF"}</div>,
+    },
+    {
+      title: "Status",
+      key: "status",
+      dataIndex: "isActive",
+      align: "center",
+      render: (value) => (value ? <Tag color="green">Active</Tag> : <Tag color="gray">Inactive</Tag>),
     },
     {
       title: "Action",
@@ -38,17 +47,37 @@ const EmployeeManagementPage = () => {
       align: "center",
       render: (record) => (
         <div className="flex items-center justify-center gap-2" key={record.id}>
-          <Tooltip title="Update Employee">
+          <Tooltip title="Update ">
             <AiFillEdit
               onClick={() => {
                 setIsUpdateEmployeeModalOpen(true);
                 setCurrentRecord(record);
               }}
             />
+            <UpdateEmployeeModal
+              employee={currentRecord}
+              isUpdateEmployeeModalOpen={isUpdateEmployeeModalOpen}
+              setIsUpdateEmployeeModalOpen={setIsUpdateEmployeeModalOpen}
+              fetchEmployees={fetchEmployees}
+            />
           </Tooltip>
 
-          <Tooltip title="Delete Employee">
-            <Popconfirm title="Do you want to delete this employee" okText="Yes" cancelText="No">
+          <Tooltip title="Toggle Status">
+            <Popconfirm
+              title="Do you want to change status?"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={() =>
+                dispatch(
+                  actions.toggleEmployee(
+                    {
+                      id: record.id,
+                    },
+                    () => fetchEmployees()
+                  )
+                )
+              }
+            >
               <HiOutlineLockOpen />
             </Popconfirm>
           </Tooltip>

@@ -1,6 +1,6 @@
 import { put, takeLatest, call, all, fork } from "redux-saga/effects";
 import axios from "axios";
-
+import { isFunction } from "lodash";
 import actions from "../actions/login";
 import rf from "../../requests/RequestFactory";
 import jwtDecode from "jwt-decode";
@@ -16,12 +16,12 @@ import {
 } from "../actions/login/action_types";
 import utils from "../../utils";
 import { useNavigate } from "react-router-dom";
-import { isFunction } from "lodash";
 
 function* register(action) {
   try {
     const { data } = yield call((params) => rf.getRequest("LoginRequest").register(params), action.params);
     yield put(actions.registerSucceed(data));
+    console.log("asdas");
     if (isFunction(action.callback)) {
       yield action.callback();
     }

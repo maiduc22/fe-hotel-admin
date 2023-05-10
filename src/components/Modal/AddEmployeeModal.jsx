@@ -38,7 +38,7 @@ export const AddEmployeeModal = ({ isAddEmployeeModalOpen, setIsAddEmployeeModal
             <Input />
           </Form.Item>
           <Form.Item name={"password"} label="Password" rules={[{ required: true, message: "Please input the password" }]}>
-            <Input type="password" />
+            <Input />
           </Form.Item>
           <Form.Item
             wrapperCol={{

@@ -3,6 +3,7 @@ import { Table, Button, Modal, Form, Input, InputNumber } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import actions from "../../redux/actions/services";
+import { useEffect } from "react";
 
 const formItemLayout = {
   labelCol: {
@@ -13,41 +14,28 @@ const formItemLayout = {
   },
 };
 
-export default function UpdateServiceModal({
-  isOpen,
-  setIsOpen,
-  service,
-  fetchService,
-}) {
+export default function UpdateServiceModal({ isOpen, setIsOpen, service, fetchService }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
-  const [_name, setName] = useState("");
-  const [_price, setPrice] = useState(0);
-  const [_description, setDescription] = useState("");
-
-  const initialValues = service
-    ? {
+  useEffect(() => {
+    if (service) {
+      form.setFieldsValue({
         name: service.name,
         price: service.price,
         description: service.description,
-      }
-    : null;
+      });
+    }
+  }, [service, form]);
 
-  const handleUpdateService = () => {
+  const handleUpdateService = (values) => {
     const body = {
       id: service.id,
-      data: {
-        name: _name ? _name : initialValues.name,
-        price: _price ? _price : initialValues.price,
-        description: _description ? _description : initialValues.description,
-      },
+      data: values,
     };
-
     dispatch(actions.updateService(body, () => fetchService()));
     setIsOpen(false);
     form.resetFields();
-    // window.location.reload();
   };
 
   const handleCancelModal = () => {
@@ -56,40 +44,25 @@ export default function UpdateServiceModal({
   };
 
   return (
-    <Modal
-      title="Update Service"
-      open={isOpen}
-      onOk={handleUpdateService}
-      onCancel={handleCancelModal}
-    >
+    <Modal title="Update Service" open={isOpen} onCancel={handleCancelModal} footer={null}>
       <Form
         form={form}
         style={{ maxWidth: 600 }}
         {...formItemLayout}
-        initialValues={initialValues}
+        onFinish={handleUpdateService}
+        autoComplete="off"
+        initialValues={{
+          name: service?.name,
+          price: service?.price,
+          description: service?.description,
+        }}
       >
-        <Form.Item
-          label="Service Name"
-          name="name"
-          rules={[
-            { required: true, message: "Please input the service name!" },
-          ]}
-        >
-          <Input value={_name} onChange={(e) => setName(e.target.value)} />
+        <Form.Item label="Service Name" name="name" rules={[{ required: true, message: "Please input the service name!" }]}>
+          <Input />
         </Form.Item>
 
-        <Form.Item
-          label="Price"
-          name="price"
-          rules={[
-            { required: true, message: "Please input the service price!" },
-          ]}
-        >
-          <InputNumber
-            style={{ width: "100%" }}
-            value={_price}
-            onChange={(value) => setPrice(value)}
-          />
+        <Form.Item label="Price" name="price" rules={[{ required: true, message: "Please input the service price!" }]}>
+          <InputNumber style={{ width: "100%" }} />
         </Form.Item>
 
         <Form.Item
@@ -102,10 +75,17 @@ export default function UpdateServiceModal({
             },
           ]}
         >
-          <Input
-            value={_description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <Input />
+        </Form.Item>
+        <Form.Item
+          wrapperCol={{
+            offset: 20,
+            span: 4,
+          }}
+        >
+          <Button type="primary" htmlType="submit">
+            Update
+          </Button>
         </Form.Item>
       </Form>
     </Modal>

@@ -2,6 +2,8 @@ import {
   GET_EMPLOYEE,
   GET_EMPLOYEE_FAIL,
   GET_EMPLOYEE_SUCCEED,
+  TOGGLE_EMPLOYEE,
+  TOGGLE_EMPLOYEE_FAIL,
   UPDATE_EMPLOYEE,
   UPDATE_EMPLOYEE_FAIL,
   UPDATE_EMPLOYEE_SUCCEED,
@@ -34,6 +36,16 @@ export default {
   }),
   updateEmployeeFail: (err) => ({
     type: UPDATE_EMPLOYEE_FAIL,
+    err,
+  }),
+
+  toggleEmployee: (params, callback) => ({
+    type: TOGGLE_EMPLOYEE,
+    params,
+    callback,
+  }),
+  toggleEmployeeFail: (err) => ({
+    type: TOGGLE_EMPLOYEE_FAIL,
     err,
   }),
 };

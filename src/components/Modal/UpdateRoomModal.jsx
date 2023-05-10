@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, Modal, Select } from "antd";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { storage } from "../../config/firebase";
 import actions from "../../redux/actions/rooms";
@@ -15,12 +15,7 @@ const formItemLayout = {
   },
 };
 
-const UpdateRoomModal = ({
-  isUpdateRoomModalOpen,
-  setUpdateRoomModalOpen,
-  room,
-  fetchRooms,
-}) => {
+const UpdateRoomModal = ({ isUpdateRoomModalOpen, setUpdateRoomModalOpen, room, fetchRooms }) => {
   const [form] = Form.useForm();
 
   const [_roomName, setRoomName] = useState("");
@@ -31,7 +26,16 @@ const UpdateRoomModal = ({
   const [_imageUrl, setImageUrl] = useState("");
 
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    if (room) {
+      form.setFieldsValue({
+        name: room.name,
+        type: room.type,
+        price: room.price,
+        description: room.description,
+      });
+    }
+  }, [room, form]);
   const updateRoom = (data) => {
     dispatch(
       actions.udpateRoom(
@@ -42,8 +46,6 @@ const UpdateRoomModal = ({
         () => fetchRooms()
       )
     );
-    // utils.showNotification("Success", "Update room successfullt", "success");
-    // window.location.reload();
   };
 
   const handleOk = (value) => {
@@ -51,10 +53,7 @@ const UpdateRoomModal = ({
       Object.assign(value, { image: room?.image });
       updateRoom(value);
     } else {
-      const imageRef = ref(
-        storage,
-        `images/${_fileImage.name + _fileImage.uid}`
-      );
+      const imageRef = ref(storage, `images/${_fileImage.name + _fileImage.uid}`);
       uploadBytes(imageRef, _fileImage)
         .then((snapshot) => {
           return getDownloadURL(snapshot.ref);
@@ -88,12 +87,7 @@ const UpdateRoomModal = ({
   };
 
   return (
-    <Modal
-      title="Add New Room"
-      open={isUpdateRoomModalOpen}
-      onCancel={handleCancel}
-      footer={""}
-    >
+    <Modal title="Update room" open={isUpdateRoomModalOpen} onCancel={handleCancel} footer={""}>
       <Form
         style={{ maxWidth: 600 }}
         {...formItemLayout}
@@ -108,26 +102,11 @@ const UpdateRoomModal = ({
           //   image: room?.image,
         }}
       >
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: "Please input the room name!" }]}
-        >
-          <Input
-            value={_roomName}
-            onChange={(e) => setRoomName(e.target.value)}
-          />
+        <Form.Item label="Name" name="name" rules={[{ required: true, message: "Please input the room name!" }]}>
+          <Input value={_roomName} onChange={(e) => setRoomName(e.target.value)} />
         </Form.Item>
-        <Form.Item
-          label="Type"
-          name="type"
-          rules={[{ required: true, message: "Please select the room type!" }]}
-        >
-          <Select
-            value={_roomType}
-            onChange={(value) => setRoomType(value)}
-            placeholder="Select a room type"
-          >
+        <Form.Item label="Type" name="type" rules={[{ required: true, message: "Please select the room type!" }]}>
+          <Select value={_roomType} onChange={(value) => setRoomType(value)} placeholder="Select a room type">
             <Select.Option value="SINGLE">SINGLE</Select.Option>
             <Select.Option value="DOUBLE">DOUBLE</Select.Option>
             <Select.Option value="VIP">VIP</Select.Option>
@@ -136,31 +115,16 @@ const UpdateRoomModal = ({
         <Form.Item
           label="Description"
           name="description"
-          rules={[
-            { required: true, message: "Please input the room description!" },
-          ]}
+          rules={[{ required: true, message: "Please input the room description!" }]}
         >
-          <Input
-            value={_roomType}
-            onChange={(e) => setRoomDescription(e.target.value)}
-          />
+          <Input value={_roomType} onChange={(e) => setRoomDescription(e.target.value)} />
         </Form.Item>
-        <Form.Item
-          label="Price"
-          name="price"
-          rules={[{ required: true, message: "Please input the room price!" }]}
-        >
-          <InputNumber
-            value={_roomType}
-            onChange={(number) => setRoomPrice(number)}
-          />
+        <Form.Item label="Price" name="price" rules={[{ required: true, message: "Please input the room price!" }]}>
+          <InputNumber value={_roomType} onChange={(number) => setRoomPrice(number)} />
         </Form.Item>
 
         <Form.Item name="image" label="Image">
-          <input
-            type={"file"}
-            onChange={(e) => setFileImage(e.target.files[0])}
-          ></input>
+          <input type={"file"} onChange={(e) => setFileImage(e.target.files[0])}></input>
         </Form.Item>
         <Form.Item
           wrapperCol={{
@@ -169,7 +133,7 @@ const UpdateRoomModal = ({
           }}
         >
           <Button type="primary" htmlType="submit">
-            Submit
+            Update
           </Button>
         </Form.Item>
       </Form>

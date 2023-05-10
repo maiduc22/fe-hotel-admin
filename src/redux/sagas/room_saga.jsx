@@ -3,20 +3,11 @@ import { isFunction, take } from "lodash";
 import rf from "../../requests/RequestFactory";
 import utils from "../../utils";
 import actions from "../actions/rooms";
-import {
-  ADD_ROOM,
-  BLOCK_ROOM,
-  GET_ROOM,
-  UNBLOCK_ROOM,
-  UPDATE_ROOM,
-} from "../actions/rooms/action_types";
+import { ADD_ROOM, BLOCK_ROOM, GET_ROOM, UNBLOCK_ROOM, UPDATE_ROOM } from "../actions/rooms/action_types";
 
 function* getRoom(action) {
   try {
-    const { data } = yield call(
-      (params) => rf.getRequest("RoomRequest").getRoom(params),
-      action.params
-    );
+    const { data } = yield call((params) => rf.getRequest("RoomRequest").getRoom(params), action.params);
     yield put(actions.getRoomSucceed(data.data));
   } catch (err) {
     console.log(err);
@@ -26,10 +17,7 @@ function* getRoom(action) {
 
 function* addRoom(action) {
   try {
-    yield call(
-      (params) => rf.getRequest("RoomRequest").addRoom(params),
-      action.params
-    );
+    yield call((params) => rf.getRequest("RoomRequest").addRoom(params), action.params);
     console.log(action.params);
     if (isFunction(action.callback)) {
       yield action.callback();
@@ -43,10 +31,7 @@ function* addRoom(action) {
 
 function* updateRoom(action) {
   try {
-    yield call(
-      (params) => rf.getRequest("RoomRequest").updateRoom(params),
-      action.params
-    );
+    yield call((params) => rf.getRequest("RoomRequest").updateRoom(params), action.params);
     if (isFunction(action.callback)) {
       yield action.callback();
     }
@@ -59,10 +44,7 @@ function* updateRoom(action) {
 
 function* blockRoom(action) {
   try {
-    yield call(
-      (params) => rf.getRequest("RoomRequest").blockRoom(params),
-      action.params
-    );
+    yield call((params) => rf.getRequest("RoomRequest").blockRoom(params), action.params);
     if (isFunction(action.callback)) {
       yield action.callback();
     }
@@ -75,10 +57,7 @@ function* blockRoom(action) {
 
 function* unblockRoom(action) {
   try {
-    yield call(
-      (params) => rf.getRequest("RoomRequest").unblockRoom(params),
-      action.params
-    );
+    yield call((params) => rf.getRequest("RoomRequest").unblockRoom(params), action.params);
     if (isFunction(action.callback)) {
       yield action.callback();
     }

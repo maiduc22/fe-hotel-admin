@@ -10,11 +10,12 @@ import {
 } from "./action_types";
 
 export default {
-  register: (data) => ({
+  register: (data, callback) => ({
     type: REGISTER,
     params: {
       data,
     },
+    callback,
   }),
   registerSucceed: (data) => ({
     type: REGISTER_SUCCEED,
