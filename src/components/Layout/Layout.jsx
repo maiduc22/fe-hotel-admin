@@ -19,13 +19,11 @@ export default class WrapContainer extends React.Component {
             style={{
               margin: "24px 16px 0",
               overflow: "initial",
-              height: "calc(100vh - 72px)",
+              minHeight: "calc(100vh - 88px)",
+              height: "fit-content",
             }}
           >
-            <div
-              className="site-layout-background"
-              style={{ padding: 24, textAlign: "center" }}
-            >
+            <div className="site-layout-background" style={{ padding: 24, textAlign: "center" }}>
               {this.props.children}
             </div>
           </Content>

@@ -85,7 +85,7 @@ export default function ServiceManagementPage() {
                 onConfirm={() => handleActiveService(record.id)}
               >
                 <Tooltip title="Active Service">
-                <AiFillUnlock />
+                  <AiFillUnlock />
                 </Tooltip>
               </Popconfirm>
             ) : (
@@ -127,17 +127,11 @@ export default function ServiceManagementPage() {
   return (
     <div className="w-full ">
       <div className="w-full mb-10 flex justify-end">
-        <Button onClick={() => setIsCreateModalOpen(true)}>
-          Create new Service
-        </Button>
-        <CreateServiceModal
-          isOpen={_isCreateModalOpen}
-          setIsOpen={setIsCreateModalOpen}
-          fetchService={fetchService}
-        />
+        <Button onClick={() => setIsCreateModalOpen(true)}>Create new Service</Button>
+        <CreateServiceModal isOpen={_isCreateModalOpen} setIsOpen={setIsCreateModalOpen} fetchService={fetchService} />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={service} rowKey="id" />
+        <Table columns={columns} dataSource={service} rowKey="id" pagination={{ pageSize: 5 }} />
       </div>
     </div>
   );

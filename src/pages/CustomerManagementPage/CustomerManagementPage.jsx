@@ -8,7 +8,7 @@ const CustomerManagementPage = () => {
     {
       title: "Full name",
       key: "fullname",
-      dataIndex: "fullname",
+      dataIndex: "fullName",
       align: "center",
     },
     {
@@ -26,7 +26,7 @@ const CustomerManagementPage = () => {
     {
       title: "ID card",
       key: "id_card",
-      dataIndex: "id_card",
+      dataIndex: "idCard",
       align: "center",
     },
   ];
@@ -43,7 +43,7 @@ const CustomerManagementPage = () => {
 
   return (
     <div className="w-full">
-      <Table columns={columns} dataSource={[customers]} rowKey={"key"} />
+      <Table columns={columns} dataSource={customers} rowKey={"key"} pagination={{ pageSize: 5 }} />
     </div>
   );
 };
