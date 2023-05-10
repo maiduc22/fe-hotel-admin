@@ -19,9 +19,14 @@ export default function BookingManagementPage() {
 
   const navigate = useNavigate();
 
-  const bookingData = useSelector((state) => state.booking_reducer).bookings.filter((booking) =>
-    booking.client.fullName.toLowerCase().includes(searchValue.toLowerCase())
-  );
+  const bookingData = useSelector((state) => state.booking_reducer)
+    .bookings.filter((booking) => booking.client.fullName.toLowerCase().includes(searchValue.toLowerCase()))
+    .sort((a, b) => {
+      {
+        const order = ["PROGRESS", "ACCEPT", "PENDING", "DONE", "CANCEL"];
+        return order.indexOf(a.status) - order.indexOf(b.status);
+      }
+    });
 
   const handleCancelBooking = (bookingId) => {
     dispatch(actions.cancelBooking(bookingId, () => fetchBooking()));
@@ -210,7 +215,7 @@ export default function BookingManagementPage() {
         />
       </div>
       <div>
-        <Table columns={columns} dataSource={bookingData} rowKey="id" pagination={{ pageSize: 5 }}></Table>
+        <Table columns={columns} dataSource={bookingData} rowKey="id" pagination={{ pageSize: 10 }}></Table>
       </div>
     </div>
   );

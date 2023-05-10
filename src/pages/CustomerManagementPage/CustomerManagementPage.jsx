@@ -43,7 +43,7 @@ const CustomerManagementPage = () => {
 
   return (
     <div className="w-full">
-      <Table columns={columns} dataSource={customers} rowKey={"key"} pagination={{ pageSize: 5 }} />
+      <Table columns={columns} dataSource={customers} rowKey={"key"} pagination={{ pageSize: 10 }} />
     </div>
   );
 };

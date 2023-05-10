@@ -130,7 +130,7 @@ export default function ServiceManagementPage() {
         <CreateServiceModal isOpen={_isCreateModalOpen} setIsOpen={setIsCreateModalOpen} fetchService={fetchService} />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={service} rowKey="id" pagination={{ pageSize: 5 }} />
+        <Table columns={columns} dataSource={service} rowKey="id" pagination={{ pageSize: 10 }} />
       </div>
     </div>
   );
