@@ -12,17 +12,14 @@ import actions from "../../redux/actions/bookings";
 import { ROUTERS } from "../../config/routers";
 
 export default function BookingManagementPage() {
-  const [isApproveBookingModalOpen, setIsApproveBookingModalOpen] =
-    useState(false);
+  const [isApproveBookingModalOpen, setIsApproveBookingModalOpen] = useState(false);
   const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [_record, setRecord] = useState(null);
 
   const navigate = useNavigate();
 
-  const bookingData = useSelector(
-    (state) => state.booking_reducer
-  ).bookings.filter((booking) =>
+  const bookingData = useSelector((state) => state.booking_reducer).bookings.filter((booking) =>
     booking.client.fullName.toLowerCase().includes(searchValue.toLowerCase())
   );
 
@@ -100,10 +97,7 @@ export default function BookingManagementPage() {
         switch (record.status) {
           case "PENDING":
             actions = (
-              <div
-                className="flex items-center justify-center gap-2"
-                key={record.id}
-              >
+              <div className="flex items-center justify-center gap-2" key={record.id}>
                 <Popconfirm
                   title="Cancel booking"
                   description="Are you sure to cancel this booking?"
@@ -137,10 +131,7 @@ export default function BookingManagementPage() {
             break;
           case "ACCEPT":
             actions = (
-              <div
-                className="flex items-center justify-center gap-2"
-                key={record.id}
-              >
+              <div className="flex items-center justify-center gap-2" key={record.id}>
                 <Popconfirm
                   title="CheckIn"
                   okText="Yes"
@@ -157,10 +148,7 @@ export default function BookingManagementPage() {
             break;
           case "PROGRESS":
             actions = (
-              <div
-                className="flex items-center justify-center gap-2"
-                key={record.id}
-              >
+              <div className="flex items-center justify-center gap-2" key={record.id}>
                 <Tooltip title="Room Service">
                   <MdRoomService
                     onClick={() => {
@@ -191,14 +179,9 @@ export default function BookingManagementPage() {
             break;
           case "DONE":
             actions = (
-              <div
-                className="flex items-center justify-center gap-2"
-                key={record.id}
-              >
+              <div className="flex items-center justify-center gap-2" key={record.id}>
                 <Tooltip title="View bill details">
-                  <AiFillInfoCircle
-                    onClick={() => handleViewBillDetails(record.id)}
-                  />
+                  <AiFillInfoCircle onClick={() => handleViewBillDetails(record.id)} />
                 </Tooltip>
               </div>
             );
@@ -227,7 +210,7 @@ export default function BookingManagementPage() {
         />
       </div>
       <div>
-        <Table columns={columns} dataSource={bookingData} rowKey="id"></Table>
+        <Table columns={columns} dataSource={bookingData} rowKey="id" pagination={{ pageSize: 5 }}></Table>
       </div>
     </div>
   );

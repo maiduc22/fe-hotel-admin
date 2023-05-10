@@ -137,9 +137,7 @@ export default function RoomManagementPage() {
   return (
     <div className="w-full ">
       <div className="w-full mb-10 flex justify-end">
-        <Button onClick={() => setIsAddRoomModalOpen(true)}>
-          Add new room
-        </Button>
+        <Button onClick={() => setIsAddRoomModalOpen(true)}>Add new room</Button>
         <AddRoomModal
           isAddRoomModalOpen={isAddRoomModalOpen}
           setAddRoomModalOpen={setIsAddRoomModalOpen}
@@ -147,7 +145,7 @@ export default function RoomManagementPage() {
         />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={rooms} rowKey="id"></Table>
+        <Table columns={columns} dataSource={rooms} rowKey="id" pagination={{ pageSize: 5 }}></Table>
       </div>
     </div>
   );

@@ -108,7 +108,7 @@ const EmployeeManagementPage = () => {
         />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={employees} rowKey={"id"} />
+        <Table columns={columns} dataSource={employees} rowKey={"id"} pagination={{ pageSize: 5 }} />
       </div>
     </div>
   );
