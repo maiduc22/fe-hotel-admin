@@ -15,12 +15,17 @@ const formItemLayout = {
   },
 };
 
-export const AddEmployeeModal = ({ isAddEmployeeModalOpen, setIsAddEmployeeModalOpen, fetchEmployees }) => {
+export const AddEmployeeModal = ({
+  isAddEmployeeModalOpen,
+  setIsAddEmployeeModalOpen,
+  fetchEmployees,
+}) => {
   const [form] = Form.useForm();
 
   const dispatch = useDispatch();
 
   const handleSubmit = (value) => {
+    console.log(value);
     dispatch(actions.register(value, () => fetchEmployees()));
     form.resetFields();
     setIsAddEmployeeModalOpen(false);
@@ -32,12 +37,36 @@ export const AddEmployeeModal = ({ isAddEmployeeModalOpen, setIsAddEmployeeModal
   };
   return (
     <>
-      <Modal title="Add New Staff" open={isAddEmployeeModalOpen} onCancel={handleCancel} footer={null}>
-        <Form {...formItemLayout} onFinish={(value) => handleSubmit(value)} form={form}>
-          <Form.Item name={"username"} label="Username" rules={[{ required: true, message: "Please input the username" }]}>
+      <Modal
+        title="Add New Staff"
+        open={isAddEmployeeModalOpen}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <Form
+          {...formItemLayout}
+          onFinish={(value) => handleSubmit(value)}
+          form={form}
+        >
+          <Form.Item
+            name={"fullname"}
+            label="Fullname"
+            rules={[{ required: true, message: "Please input the username" }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name={"password"} label="Password" rules={[{ required: true, message: "Please input the password" }]}>
+          <Form.Item
+            name={"username"}
+            label="Username"
+            rules={[{ required: true, message: "Please input the username" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name={"password"}
+            label="Password"
+            rules={[{ required: true, message: "Please input the password" }]}
+          >
             <Input />
           </Form.Item>
           <Form.Item

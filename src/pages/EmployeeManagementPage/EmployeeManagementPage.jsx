@@ -11,12 +11,13 @@ import UpdateEmployeeModal from "../../components/Modal/UpdateEmployeeModal";
 const EmployeeManagementPage = () => {
   const dispatch = useDispatch();
   const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
-  const [isUpdateEmployeeModalOpen, setIsUpdateEmployeeModalOpen] = useState(false);
+  const [isUpdateEmployeeModalOpen, setIsUpdateEmployeeModalOpen] =
+    useState(false);
   const [currentRecord, setCurrentRecord] = useState(null);
 
   const columns = [
     {
-      title: "Full name",
+      title: "Fullname",
       key: "fullname",
       dataIndex: "fullName",
       align: "center",
@@ -32,14 +33,21 @@ const EmployeeManagementPage = () => {
       key: "role",
       dataIndex: "position",
       align: "center",
-      render: (role) => <div>{role === "ROLE_MANAGER" ? "MANAGER" : "STAFF"}</div>,
+      render: (role) => (
+        <div>{role === "ROLE_MANAGER" ? "MANAGER" : "STAFF"}</div>
+      ),
     },
     {
       title: "Status",
       key: "status",
       dataIndex: "isActive",
       align: "center",
-      render: (value) => (value ? <Tag color="green">Active</Tag> : <Tag color="gray">Inactive</Tag>),
+      render: (value) =>
+        value ? (
+          <Tag color="green">Active</Tag>
+        ) : (
+          <Tag color="gray">Inactive</Tag>
+        ),
     },
     {
       title: "Action",
@@ -99,7 +107,9 @@ const EmployeeManagementPage = () => {
   return (
     <div className="w-full ">
       <div className="w-full mb-10 flex justify-end">
-        <Button onClick={() => setIsAddEmployeeModalOpen(true)}>Add new staff</Button>
+        <Button onClick={() => setIsAddEmployeeModalOpen(true)}>
+          Add new staff
+        </Button>
 
         <AddEmployeeModal
           isAddEmployeeModalOpen={isAddEmployeeModalOpen}
@@ -108,7 +118,12 @@ const EmployeeManagementPage = () => {
         />
       </div>
       <div className="w-full">
-        <Table columns={columns} dataSource={employees} rowKey={"id"} pagination={{ pageSize: 10 }} />
+        <Table
+          columns={columns}
+          dataSource={employees}
+          rowKey={"id"}
+          pagination={{ pageSize: 10 }}
+        />
       </div>
     </div>
   );

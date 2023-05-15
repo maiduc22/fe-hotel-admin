@@ -15,7 +15,9 @@ const formItemLayout = {
 };
 
 const RoomServiceSelection = ({ roomId, bookingId }) => {
-  const services = useSelector((state) => state.service_reducer).service;
+  const services = useSelector((state) => state.service_reducer).service.filter(
+    (ele) => ele.status !== "INACTIVE"
+  );
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
